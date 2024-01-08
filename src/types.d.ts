@@ -86,4 +86,5 @@ interface Multa {
     empresa: Empresa
     multas?: Multa[]
   }
-  
+
+type geoCode = [number, number]

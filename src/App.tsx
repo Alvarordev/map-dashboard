@@ -4,25 +4,32 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import { privateRoutes } from "./router/AppRoutes";
 import Login from "./pages/Login";
 import DefaultLayout from "./layout/DefaultLayout";
+import { MapProvider } from "./context/map-context";
 
 function App() {
   const userData = null;
 
   return (
-    <Suspense fallback={<FallbackLoader />}>
-      <Routes>
-        <Route element={<DefaultLayout />}>
-          {privateRoutes.map((route) => (
-            <Route key={route.path} path={route.path} element={route.element} />
-          ))}
-        </Route>
+    <MapProvider>
+      <Suspense fallback={<FallbackLoader />}>
+        <Routes>
+          <Route element={<DefaultLayout />}>
+            {privateRoutes.map((route) => (
+              <Route
+                key={route.path}
+                path={route.path}
+                element={route.element}
+              />
+            ))}
+          </Route>
 
-        <Route
-          path="/login"
-          element={userData ? <Navigate to="/" /> : <Login />}
-        />
-      </Routes>
-    </Suspense>
+          <Route
+            path="/login"
+            element={userData ? <Navigate to="/" /> : <Login />}
+          />
+        </Routes>
+      </Suspense>
+    </MapProvider>
   );
 }
 

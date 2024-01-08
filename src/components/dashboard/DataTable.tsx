@@ -6,10 +6,10 @@ import {
 } from "@tanstack/react-table";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import SetMap from "../map/SetMap";
 
 const DataTable = () => {
   const [data, setData] = useState<Multa[]>([]);
-  console.log(data);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -27,7 +27,7 @@ const DataTable = () => {
         return b.iCodMulta - a.iCodMulta;
       });
 
-      setData(sortedData);  
+      setData(sortedData);
     };
 
     fetchData();
@@ -36,8 +36,12 @@ const DataTable = () => {
   const columns: ColumnDef<Multa>[] = [
     {
       header: "Opciones",
-      cell: () => {
-        return <div className={`text-center`}>ubicar</div>;
+      cell: ({ row }: { row: any }) => {
+        const coords: geoCode = [
+          data[row.id].gCoordenadasXMulta,
+          data[row.id].gCoordenadasYMulta,
+        ];
+        return <SetMap coords={coords} />;
       },
     },
     {

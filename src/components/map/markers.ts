@@ -17,6 +17,5 @@ export const fetchMarkers = async () => {
     geocode: [multa.gCoordenadasXMulta, multa.gCoordenadasYMulta],
   }));
 
-  console.log("Markers", markers);
   return markers;
 };
