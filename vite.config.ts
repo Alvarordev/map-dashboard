@@ -3,6 +3,7 @@ import react from '@vitejs/plugin-react-swc'
 
 const cherryPickedKeys = [
   "REACT_APP_API_URL",
+  "MAPBOX_ACCESS_TOKEN"
 ];
 
 // https://vitejs.dev/config/
