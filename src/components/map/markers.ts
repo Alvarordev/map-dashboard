@@ -1,5 +1,6 @@
-interface Marker {
-  geocode: [number, number];
+export interface Marker {
+  geocode: geoCode;
+  estado: boolean
 }
 
 export const fetchMarkers = async () => {
@@ -15,6 +16,7 @@ export const fetchMarkers = async () => {
 
   const markers: Marker[] = multas.map((multa) => ({
     geocode: [multa.gCoordenadasXMulta, multa.gCoordenadasYMulta],
+    estado: multa.bEstadoRegistro
   }));
 
   return markers;

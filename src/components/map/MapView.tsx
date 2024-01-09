@@ -1,50 +1,66 @@
 import { MapContainer, Marker, TileLayer } from "react-leaflet";
 import { Icon, Map } from "leaflet";
-import MapPin from "../../assets/icons/map-pin.svg";
+import RedPin from "../../assets/icons/map-pin.svg";
+import GreenPin from "../../assets/icons/map-pin-green.svg";
+import { Button } from "../ui/Button";
+import { type Marker as MarkerType, fetchMarkers } from "./markers";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
 import "leaflet/dist/leaflet.css";
-import { fetchMarkers } from "./markers";
-import { useCallback, useEffect, useMemo, useState } from "react";
-import { useMapContext } from "../../context/map-context";
-import { Button } from "../ui/Button";
-
-interface Marker {
-  geocode: geoCode;
-}
 
 const SetMapFunction = ({ map }: { map: Map }) => {
   const onClick = useCallback(() => {
     map.setView([-12.0910215, -77.0472762], 13);
   }, [map]);
 
-  return <Button size="sm" className="mt-2 absolute top-0 z-[1000] right-2" onClick={onClick}>Reiniciar Mapa</Button>;
+  return (
+    <Button
+      size="sm"
+      className="mt-2 absolute top-0 z-[1000] right-2"
+      onClick={onClick}
+    >
+      Reiniciar Mapa
+    </Button>
+  );
 };
 
-const MapView = () => {
-  const position: [number, number] = [-12.0910215, -77.0472762];
-  const [markers, setMarkers] = useState<Marker[]>([]);
+interface Props {
+  onMapChange: React.Dispatch<React.SetStateAction<Map | null>>;
+}
+
+const redPin = new Icon({
+  iconUrl: RedPin,
+  iconSize: [30, 30],
+  iconAnchor: [15, 30],
+});
+
+const greenPin = new Icon({
+  iconUrl: GreenPin,
+  iconSize: [30, 30],
+  iconAnchor: [15, 30],
+});
+
+const MapView = ({ onMapChange }: Props) => {
+  const position: geoCode = [-12.0910215, -77.0472762];
+  const [markers, setMarkers] = useState<MarkerType[]>([]);
   const [map, setMap] = useState<Map | null>(null);
 
-  const { setMap: defineMap } = useMapContext();
-
   useEffect(() => {
-    defineMap(map);
-  }, [markers]);
-
-  useEffect(() => {
-    const getMarkers = async () => {
-      const response = await fetchMarkers();
-      setMarkers(response);
-    };
-
-    getMarkers();
+    fetchMarkersAndSetState();
   }, []);
 
-  const customIcon = new Icon({
-    iconUrl: MapPin,
-    iconSize: [30, 30],
-    iconAnchor: [15, 30],
-  });
+  useEffect(() => {
+    updateMap();
+  }, [markers]);
+
+  const updateMap = () => {
+    onMapChange(map);
+  };
+
+  const fetchMarkersAndSetState = async () => {
+    const response = await fetchMarkers();
+    setMarkers(response);
+  };
 
   const displayMap = useMemo(
     () => (
@@ -69,7 +85,7 @@ const MapView = () => {
           <Marker
             key={index}
             position={marker.geocode}
-            icon={customIcon}
+            icon={marker.estado ? redPin : greenPin}
           ></Marker>
         ))}
       </MapContainer>

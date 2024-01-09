@@ -1,7 +1,7 @@
-// actions.ts
 import { createAsyncThunk, createAction, createSlice } from "@reduxjs/toolkit";
-import { AuthData, logIn } from "../api/authAPI";
+import { type AuthData, logIn } from "../api/authAPI";
 import { decodeToken } from "../../utils/authUtils";
+import { NavigateFunction } from "react-router-dom";
 
 interface UserData {
   exp: number;
@@ -29,7 +29,7 @@ const initialState: State = {
 
 export interface LoginProps {
   authData: AuthData;
-  navigate: any;
+  navigate: NavigateFunction;
 }
 
 export const loginAsync = createAsyncThunk(
@@ -38,13 +38,9 @@ export const loginAsync = createAsyncThunk(
     try {
       const { data, error } = await logIn(authData);
 
-      if (error) {
-        throw error;
-      }
+      if (error) throw error;
 
-      if (!data) {
-        throw new Error("Ocurrió un error");
-      }
+      if (!data) throw new Error("Ocurrió un error");
 
       const accessToken = data.access_token;
       const userData = decodeToken(accessToken);
@@ -56,12 +52,32 @@ export const loginAsync = createAsyncThunk(
 
       return { accessToken, userData, error };
     } catch (err: any) {
-      return rejectWithValue({ error: err.response.data.message, accessToken: null, userData: null });
+      return rejectWithValue({
+        error: err.response.data.message,
+        accessToken: null,
+        userData: null,
+      });
     }
   }
 );
 
-export const logout = createAction("auth/logout");
+export const logoutAsync = createAsyncThunk(
+  "auth/logout",
+  async (navigate: NavigateFunction) => {
+    try {
+      localStorage.removeItem("accessToken");
+      localStorage.removeItem("userData");
+
+      navigate("/login");
+
+      return { success: true };
+    } catch (error) {
+      // Manejar errores si es necesario
+      console.error("Error during logout:", error);
+      throw error;
+    }
+  }
+);
 
 export const initializeAuth = createAction("auth/initializeAuth");
 
@@ -71,7 +87,6 @@ const authSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     // LOGIN
-
     builder.addCase(loginAsync.pending, (state) => {
       state.isLoading = true;
     });
@@ -87,14 +102,22 @@ const authSlice = createSlice({
       state.isLoading = false;
     });
 
-    // Maneja la acción de logout
-    builder.addCase(logout, (state) => {
-      state.userData = null;
-      localStorage.removeItem("accessToken");
-      localStorage.removeItem("userData");
+    // LOGOUT
+    builder.addCase(logoutAsync.pending, (state) => {
+      state.isLoading = true;
     });
 
-    // Maneja la acción de inicializar la autenticación
+    builder.addCase(logoutAsync.rejected, (state, action) => {
+      state.error = action.error.message;
+      state.isLoading = false;
+    });
+
+    builder.addCase(logoutAsync.fulfilled, (state) => {
+      state.userData = null;
+      state.isLoading = false;
+    });
+
+    // INITIALIZE AUTH
     builder.addCase(initializeAuth, (state) => {
       state.userData = null;
     });

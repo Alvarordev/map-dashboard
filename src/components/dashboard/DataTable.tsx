@@ -4,24 +4,22 @@ import {
   flexRender,
   getCoreRowModel,
 } from "@tanstack/react-table";
+import MoveToMarker from "../map/MoveToMarker";
 import { useEffect, useState } from "react";
-import axios from "axios";
-import SetMap from "../map/SetMap";
+import { Badge } from "../ui/Badge";
+import { Map } from "leaflet";
+import { getMultas } from "../../redux/api/multasAPI";
 
-const DataTable = () => {
+interface Props {
+  map: Map | null;
+}
+
+const DataTable = ({ map }: Props) => {
   const [data, setData] = useState<Multa[]>([]);
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await axios.get(
-        `${process.env.REACT_APP_API_URL}/multa`,
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-          },
-        }
-      );
+      const response = await getMultas();
 
       const sortedData = response.data.sort((a: Multa, b: Multa) => {
         return b.iCodMulta - a.iCodMulta;
@@ -43,7 +41,7 @@ const DataTable = () => {
         ];
         return (
           <div className="w-full flex justify-center items-center">
-            <SetMap coords={coords} />
+            <MoveToMarker coords={coords} map={map} />
           </div>
         );
       },
@@ -69,13 +67,9 @@ const DataTable = () => {
 
         return (
           <div className={`text-center py-2`}>
-            <span
-              className={`text-white font-medium rounded-md pb-0.5 px-1 ${
-                estado ? "bg-red-600" : "bg-green-600"
-              }`}
-            >
+            <Badge className={`${estado ? "bg-red-500" : "bg-emerald-500"}`}>
               {estado ? "bloqueado" : "liberado"}
-            </span>
+            </Badge>
           </div>
         );
       },
@@ -92,13 +86,9 @@ const DataTable = () => {
 
         return (
           <div className={`text-center`}>
-            <span
-              className={`text-white font-medium rounded-md pb-0.5 px-2 ${
-                tipo ? "bg-blue-600" : "bg-orange-600"
-              }`}
-            >
+            <Badge className={`${tipo ? "bg-blue-600" : "bg-orange-600"}`}>
               {tipo === 1 ? "liviano" : "pesado"}
-            </span>
+            </Badge>
           </div>
         );
       },

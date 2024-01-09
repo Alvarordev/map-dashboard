@@ -1,53 +1,59 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAppDispatch } from "../redux/store";
-import { loginAsync } from "../redux/slices/auth.slice";
+import { isRejectedWithValue } from "@reduxjs/toolkit";
 import { toast } from "sonner";
+import { Button } from "../components/ui/Button";
+import { useAuth } from "../hooks/useAuth";
 
 const Login = () => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const { logIn } = useAuth();
 
-  const login = async (e: React.FormEvent<HTMLFormElement>) => {
+  const [formData, setFormData] = useState({
+    vAliasUsuario: "",
+    vClaveUsuario: "",
+  });
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData((prevFormData) => ({ ...prevFormData, [name]: value }));
+  };
+
+  const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const authData = {
-      vAliasUsuario: username,
-      vClaveUsuario: password,
-    };
+    const result = await logIn({ authData: formData, navigate });
 
-    const result = await dispatch(loginAsync({ authData, navigate }));
-
-    if (result.type.includes("rejected")) toast.error('Usuario o contraseña incorrectos');
+    if (isRejectedWithValue(result))
+      toast.error("Usuario o contraseña incorrectos");
   };
 
   return (
     <div className="flex flex-col justify-center items-center h-screen">
       <h2 className="text-2xl font-semibold pb-4">Login</h2>
 
-      <form onSubmit={login} className="flex flex-col w-full max-w-xs">
+      <form onSubmit={handleLogin} className="flex flex-col w-full max-w-xs">
         <label className="mb-2">Username:</label>
         <input
           type="text"
-          onChange={(e) => setUsername(e.target.value)}
+          name="vAliasUsuario"
+          value={formData.vAliasUsuario}
+          onChange={handleInputChange}
           className="p-2 mb-4 border-2 border-gray-500"
         />
 
         <label className="mb-2">Password:</label>
         <input
           type="password"
-          onChange={(e) => setPassword(e.target.value)}
+          name="vClaveUsuario"
+          value={formData.vClaveUsuario}
+          onChange={handleInputChange}
           className="p-2 mb-4 border-2 border-gray-500"
         />
 
-        <button
-          type="submit"
-          className="p-2.5 bg-blue-500 text-white cursor-pointer hover:scale-105 transition-all"
-        >
+        <Button type="submit" className="hover:scale-105">
           Login
-        </button>
+        </Button>
       </form>
     </div>
   );

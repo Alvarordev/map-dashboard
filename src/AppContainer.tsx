@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { MapProvider } from "./context/map-context";
 import { Provider } from "react-redux";
 import { Toaster } from "sonner";
 import { store } from "./redux/store";
@@ -40,10 +39,8 @@ const AppContainer = () => {
 
   return (
     <Provider store={store}>
-      <Toaster position="top-center"/>
-      <MapProvider>
-        <App />
-      </MapProvider>
+      <Toaster position="top-center" richColors />
+      <App />
     </Provider>
   );
 };
