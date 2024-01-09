@@ -18,7 +18,7 @@ const DataTable = () => {
         {
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
           },
         }
       );
@@ -41,7 +41,11 @@ const DataTable = () => {
           data[row.id].gCoordenadasXMulta,
           data[row.id].gCoordenadasYMulta,
         ];
-        return <SetMap coords={coords} />;
+        return (
+          <div className="w-full flex justify-center items-center">
+            <SetMap coords={coords} />
+          </div>
+        );
       },
     },
     {

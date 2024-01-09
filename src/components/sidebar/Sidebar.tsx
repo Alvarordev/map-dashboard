@@ -8,7 +8,8 @@ const Sidebar = () => {
 
   const logOut = () => {
     if (localStorage) {
-      localStorage.removeItem("authToken");
+      localStorage.removeItem("accessToken");
+      localStorage.removeItem("userData");
       navigate("/login");
     } else {
       navigate("/login");

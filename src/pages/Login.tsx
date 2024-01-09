@@ -1,43 +1,26 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useAppDispatch } from "../redux/store";
+import { loginAsync } from "../redux/slices/auth.slice";
+import { toast } from "sonner";
 
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const navigate = useNavigate()
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const login = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/auth/login`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          vAliasUsuario: username,
-          vClaveUsuario: password,
-        }),
-      });
+    const authData = {
+      vAliasUsuario: username,
+      vClaveUsuario: password,
+    };
 
-      if (!response.ok) {
-        throw new Error("Login failed");
-      }
+    const result = await dispatch(loginAsync({ authData, navigate }));
 
-      const data = await response.json();
-      const authToken = data.access_token;
-      console.log("Token:", authToken);
-
-      // Almacenar el token en localStorage, Vuex, cookies, etc.
-      localStorage.setItem("authToken", authToken);
-
-      // Redirigir o realizar otras acciones después del inicio de sesión
-      navigate('/ds/dashboard');
-    } catch (error) {
-      console.error("Error al iniciar sesión:", error);
-      // Manejar errores, mostrar mensajes al usuario, etc.
-    }
+    if (result.type.includes("rejected")) toast.error('Usuario o contraseña incorrectos');
   };
 
   return (

@@ -1,7 +1,7 @@
-import { Outlet } from "react-router-dom";
 import Sidebar from "../components/sidebar/Sidebar";
+import { Outlet } from "react-router-dom";
 
-const DefaultLayout = () => {
+const PrivateRoute = () => {
   return (
     <main className="flex text-primary min-h-screen bg-background">
       <Sidebar />
@@ -12,4 +12,4 @@ const DefaultLayout = () => {
   );
 };
 
-export default DefaultLayout;
+export default PrivateRoute;
