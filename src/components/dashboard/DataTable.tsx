@@ -5,30 +5,24 @@ import {
   getCoreRowModel,
 } from "@tanstack/react-table";
 import MoveToMarker from "../map/MoveToMarker";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Badge } from "../ui/Badge";
 import { Map } from "leaflet";
-import { getMultas } from "../../redux/api/multasAPI";
+import { useMulta } from "../../hooks/useMulta";
+import { Button } from "../ui/Button";
+import { useModal } from "../../context/ModalProvider";
+import MultaForm from "./MultaForm";
 
 interface Props {
   map: Map | null;
 }
 
 const DataTable = ({ map }: Props) => {
-  const [data, setData] = useState<Multa[]>([]);
+  const { multas, getAllMultas } = useMulta();
+  const { openModal } = useModal();
 
   useEffect(() => {
-    const fetchData = async () => {
-      const response = await getMultas();
-
-      const sortedData = response.data.sort((a: Multa, b: Multa) => {
-        return b.iCodMulta - a.iCodMulta;
-      });
-
-      setData(sortedData);
-    };
-
-    fetchData();
+    getAllMultas();
   }, []);
 
   const columns: ColumnDef<Multa>[] = [
@@ -36,8 +30,8 @@ const DataTable = ({ map }: Props) => {
       header: "Opciones",
       cell: ({ row }: { row: any }) => {
         const coords: geoCode = [
-          data[row.id].gCoordenadasXMulta,
-          data[row.id].gCoordenadasYMulta,
+          multas[row.id].gCoordenadasXMulta,
+          multas[row.id].gCoordenadasYMulta,
         ];
         return (
           <div className="w-full flex justify-center items-center">
@@ -105,23 +99,46 @@ const DataTable = ({ map }: Props) => {
           row.getValue("dtFechaBloqueo")
         ).toLocaleString("es-ES");
 
-        return <div className={`text-left`}>{formattedDate}</div>;
+        return <div className={`text-center`}>{formattedDate}</div>;
       },
     },
     {
       header: "Usuario Bloqueo",
       accessorKey: "usuariobloqueo.vAliasUsuario",
     },
+    {
+      header: "Fecha Liberado",
+      accessorKey: "dtFechaDesbloqueo",
+      cell: ({ row }) => {
+        const formattedDate = new Date(
+          row.getValue("dtFechaDesbloqueo")
+        ).toLocaleString("es-ES");
+
+        return <div className={`text-center`}>{formattedDate}</div>;
+      },
+    },
+    {
+      header: "Usuario Libera",
+      accessorKey: "usuariodesbloqueo.vAliasUsuario",
+    },
   ];
 
   const table = useReactTable({
-    data,
+    data: multas,
     columns,
     getCoreRowModel: getCoreRowModel(),
   });
 
   return (
     <div className="relative w-full overflow-auto">
+      <Button
+        size="sm"
+        className="mb-3"
+        onClick={() => openModal(<MultaForm />)}
+      >
+        <span>Registrar Incidencia</span>
+      </Button>
+
       <table className="w-full caption-bottom text-sm">
         <thead className="[&_tr]:border-b [&_tr]:border-t">
           {table.getHeaderGroups().map((headerGroup) => (

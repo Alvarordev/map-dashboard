@@ -1,0 +1,34 @@
+import { API } from "./utils";
+
+interface GetAllProps {
+  error: any;
+  data?: Multa[] | null;
+}
+
+export const getAllMultas = async (): Promise<GetAllProps> => {
+  try {
+    const res = await API.get("/multa", {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    return { error: null, data: res.data };
+  } catch (err: any) {
+    return { error: err, data: null };
+  }
+};
+
+export const createMulta = async (multa: Multa) => {
+  try {
+    const res = await API.post("/multa", multa, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    return { error: null, data: res.data };
+  } catch (err) {
+    return { error: err, data: null };
+  }
+};

@@ -1,11 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { authReducer } from "./slices/auth.slice";
+import { multaReducer } from "./slices/multa.slice";
 import { useDispatch, useSelector } from "react-redux";
 import type { TypedUseSelectorHook } from "react-redux";
 
 export const store = configureStore({
   reducer: {
     auth: authReducer,
+    multa: multaReducer
   },
 });
 

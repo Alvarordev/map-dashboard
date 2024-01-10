@@ -33,8 +33,8 @@ const Sidebar = () => {
   return (
     <aside
       className={`${
-        toggleSidebar ? "max-w-24" : ""
-      } text-primary-foreground bg-foreground flex flex-col min-h-full w-full max-w-64 py-8 px-6 transition-all`}
+        toggleSidebar ? "max-w-24" : "max-w-64"
+      } text-primary-foreground bg-foreground flex flex-col min-h-full w-full  py-8 px-6 transition-all`}
     >
       <header className="flex justify-between items-center pb-10">
         <h2

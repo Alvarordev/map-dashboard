@@ -6,6 +6,7 @@ import FallbackLoader from "./components/loaders/FallbackLoader";
 import axios from "axios";
 
 import App from "./App";
+import { ModalProvider } from "./context/ModalProvider";
 
 const ErrorComponent = ({ errorMessage }: { errorMessage: string | null }) => (
   <div className="text-red-500 font-bold text-center">{errorMessage}</div>
@@ -39,8 +40,12 @@ const AppContainer = () => {
 
   return (
     <Provider store={store}>
-      <Toaster position="top-center" richColors />
-      <App />
+      <ModalProvider>
+        <>
+          <Toaster position="top-center" richColors />
+          <App />
+        </>
+      </ModalProvider>
     </Provider>
   );
 };
