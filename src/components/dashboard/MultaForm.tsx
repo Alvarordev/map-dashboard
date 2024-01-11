@@ -4,7 +4,9 @@ import { Input } from "../ui/Input";
 const MultaForm = () => {
   return (
     <>
-      <div className="text-lg font-semibold text-center pb-5">Registrar Incidencia</div>
+      <div className="text-lg font-semibold text-center pb-5">
+        Registrar Incidencia
+      </div>
       <form className="flex flex-wrap gap-3 w-[600px] px-2">
         <div className="flex flex-col">
           <label>Tipo de cepo</label>
