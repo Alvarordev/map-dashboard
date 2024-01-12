@@ -19,7 +19,7 @@ export const getAllMultas = async (): Promise<GetAllProps> => {
   }
 };
 
-export const createMulta = async (multa: Multa) => {
+export const createMulta = async (multa: Multa): Promise<{data: Multa | null, error: any}> => {
   try {
     const res = await API.post("/multa", multa, {
       headers: {

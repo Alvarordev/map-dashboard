@@ -15,7 +15,7 @@ export function Modal({ children, show, handleClose, className }: Props) {
       className={`
       fixed inset-0 m-auto 
       flex items-end justify-center 
-      z-[400]
+      z-[1000]
       ${!show && "hidden"}
       ${className}
       md:items-center 

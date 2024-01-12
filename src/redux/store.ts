@@ -1,5 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { authReducer } from "./slices/auth.slice";
+import { authReducer, initializeAuthAsync } from "./slices/auth.slice";
 import { multaReducer } from "./slices/multa.slice";
 import { useDispatch, useSelector } from "react-redux";
 import type { TypedUseSelectorHook } from "react-redux";
@@ -10,6 +10,8 @@ export const store = configureStore({
     multa: multaReducer
   },
 });
+
+store.dispatch(initializeAuthAsync())
 
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;

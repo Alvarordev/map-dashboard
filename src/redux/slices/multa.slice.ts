@@ -79,8 +79,8 @@ const multaSlice = createSlice({
 
     builder.addCase(createMultaAsync.fulfilled, (state, action) => {
       state.isLoading = false;
-      state.created = action.payload?.data;
-      state.multas?.push(action.payload?.data);
+      state.created = action.payload.data;
+      state.multas.push(action.payload.data);
     });
   },
 });

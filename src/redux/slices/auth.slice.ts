@@ -1,9 +1,9 @@
-import { createAsyncThunk, createAction, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { type AuthData, logIn } from "../api/authAPI";
-import { decodeToken } from "../../utils/authUtils";
+import { decodeToken, isValidToken } from "../../utils/authUtils";
 import { NavigateFunction } from "react-router-dom";
 
-interface UserData {
+export interface UserData {
   exp: number;
   iCodEmpresa: number;
   iCodPerfil_: number;
@@ -31,6 +31,44 @@ export interface LoginProps {
   authData: AuthData;
   navigate: NavigateFunction;
 }
+
+export const initializeAuthAsync = createAsyncThunk(
+  "auth/initializeAuth",
+  async () => {
+    try {
+      const accessToken = localStorage.getItem("accessToken");
+      
+      if (accessToken) {
+        if (isValidToken(accessToken)) {
+          const userData = decodeToken(accessToken);
+          return { accessToken, userData };
+        } else {
+          throw new Error("El token ha expirado");
+        }
+      } else {
+        throw new Error("No hay un accessToken");
+      }
+    } catch (err) {
+      return { error: err, accessToken: null, userData: null };
+    }
+  }
+);
+
+export const setInitializeAuth = createAsyncThunk(
+  "auth/setInitializeAuth",
+  async (navigate: NavigateFunction, { dispatch }) => {
+    try {
+      await dispatch(logoutAsync(navigate));
+
+      navigate('/login')
+
+      return { success: true };
+    } catch (error) {
+      console.error("Error during setInitializeAuth:", error);
+      throw error;
+    }
+  }
+);
 
 export const loginAsync = createAsyncThunk(
   "auth/login",
@@ -79,8 +117,6 @@ export const logoutAsync = createAsyncThunk(
   }
 );
 
-export const initializeAuth = createAction("auth/initializeAuth");
-
 const authSlice = createSlice({
   name: "auth",
   initialState,
@@ -118,8 +154,33 @@ const authSlice = createSlice({
     });
 
     // INITIALIZE AUTH
-    builder.addCase(initializeAuth, (state) => {
-      state.userData = null;
+    builder.addCase(initializeAuthAsync.pending, (state) => {
+      state.isLoading = true;
+    });
+
+    builder.addCase(initializeAuthAsync.rejected, (state, action) => {
+      state.isLoading = false;
+      state.error = action.error.message;
+    });
+
+    builder.addCase(initializeAuthAsync.fulfilled, (state, action) => {
+      state.userData = action.payload.userData;
+      state.accessToken = action.payload.accessToken;
+      state.isLoading = false;
+    });
+
+    // SET INITIALIZE AUTH
+    builder.addCase(setInitializeAuth.pending, (state) => {
+      state.isLoading = true;
+    });
+
+    builder.addCase(setInitializeAuth.rejected, (state, action) => {
+      state.isLoading = false;
+      state.error = action.error.message;
+    });
+
+    builder.addCase(setInitializeAuth.fulfilled, (state) => {
+      state.isLoading = false;
     });
   },
 });

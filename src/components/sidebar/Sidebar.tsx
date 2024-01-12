@@ -1,11 +1,14 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { LayoutDashboard, LogOut, PanelLeft, Building2 } from "lucide-react";
 import { Button } from "../ui/Button";
-import { useState } from "react";
 import { useAuth } from "../../hooks/useAuth";
 
-const Sidebar = () => {
-  const [toggleSidebar, setToggleSidebar] = useState(false);
+interface Props {
+  toggleBar: boolean,
+  setToggleBar: React.Dispatch<React.SetStateAction<boolean>>
+}
+
+const Sidebar = ({toggleBar, setToggleBar}: Props) => {
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -33,13 +36,13 @@ const Sidebar = () => {
   return (
     <aside
       className={`${
-        toggleSidebar ? "max-w-24" : "max-w-64"
-      } text-primary-foreground bg-foreground flex flex-col min-h-full w-full  py-8 px-6 transition-all`}
+        toggleBar ? "max-w-24" : "max-w-64"
+      } text-primary-foreground bg-foreground flex flex-col min-h-full w-full  py-8 px-6 transition-all fixed`}
     >
       <header className="flex justify-between items-center pb-10">
         <h2
           className={`${
-            toggleSidebar ? "hidden" : ""
+            toggleBar ? "hidden" : ""
           } text-center text-2xl font-semibold`}
         >
           LOGO
@@ -48,7 +51,7 @@ const Sidebar = () => {
         <Button
           variant="ghost"
           onClick={() => {
-            setToggleSidebar(!toggleSidebar);
+            setToggleBar(!toggleBar);
           }}
         >
           <PanelLeft />
@@ -60,11 +63,11 @@ const Sidebar = () => {
           <Link key={route.path} to={route.path}>
             <li
               className={`${route.active} ${
-                toggleSidebar && "justify-center"
+                toggleBar && "justify-center"
               } flex gap-2 items-center py-2 px-5 rounded-xl transition-all hover:text-accent`}
             >
               <span className="h-full">{route.icon}</span>
-              <span className={`${toggleSidebar ? "hidden" : ""}`}>
+              <span className={`${toggleBar ? "hidden" : ""}`}>
                 {route.title}
               </span>
             </li>
@@ -80,7 +83,7 @@ const Sidebar = () => {
         >
           <>
             <LogOut />
-            <span className={`${toggleSidebar ? "hidden" : ""}`}>
+            <span className={`${toggleBar ? "hidden" : ""}`}>
               Cerrar sesión
             </span>
           </>

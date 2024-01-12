@@ -14,14 +14,14 @@ interface Multa {
     vColorAuto: string
     iNumeroLlantas: number
     vCodigoPreliquidacion: string
-    dFechaPago?: Date | null
+    dFechaPago?: Date | string | null
     iCodUsuarioBloqueo?: number | null
-    dtFechaBloqueo?: Date | null
+    dtFechaBloqueo?: Date | string | null
     iCodUsuarioDesbloqueo?: number | null
     dtFechaDesbloqueo?: Date | null
     bEstadoRegistro: boolean
     iCodigoUsuarioCreacion: number
-    dtFechaCreacion: Date
+    dtFechaCreacion: Date | string 
     iCodigoUsuarioModificacion?: number | null
     dtFechaModificacion?: Date | null
     empresa: Empresa
