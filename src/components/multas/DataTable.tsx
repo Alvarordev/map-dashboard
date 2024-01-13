@@ -11,6 +11,11 @@ import { Badge } from "../ui/Badge";
 import { useMulta } from "../../hooks/useMulta";
 import { Input } from "../ui/Input";
 
+interface DateFilter {
+  startDate: string;
+  endDate: string;
+}
+
 const MultaDataTable = () => {
   const { multas, getAllMultas } = useMulta();
 
@@ -73,6 +78,7 @@ const MultaDataTable = () => {
     {
       header: "Fecha bloqueo",
       accessorKey: "dtFechaBloqueo",
+      filterFn: "dateFilter" as any,
       cell: ({ row }) => {
         const formattedDate = new Date(
           row.getValue("dtFechaBloqueo")
@@ -107,6 +113,34 @@ const MultaDataTable = () => {
   const table = useReactTable({
     data: multas,
     columns,
+    filterFns: {
+      dateFilter: (row, columnId, filterValue) => {
+        const { startDate, endDate } = filterValue || ({} as DateFilter);
+        const fecha = row.original[columnId];
+        const fechaBloqueo = new Date(fecha);
+
+        if (!startDate && !endDate) {
+          return true;
+        }
+
+        if (startDate && endDate) {
+          return (
+            fechaBloqueo >= new Date(startDate) &&
+            fechaBloqueo <= new Date(endDate)
+          );
+        }
+
+        if (startDate) {
+          return fechaBloqueo >= new Date(startDate);
+        }
+
+        if (endDate) {
+          return fechaBloqueo <= new Date(endDate);
+        }
+
+        return true;
+      },
+    },
     getCoreRowModel: getCoreRowModel(),
     onColumnFiltersChange: setColumnFilters,
     getFilteredRowModel: getFilteredRowModel(),
@@ -114,6 +148,11 @@ const MultaDataTable = () => {
       columnFilters,
     },
   });
+
+  const handleDateChange = (startDate: string, endDate: string) => {
+    const dateFilter: DateFilter = { startDate, endDate };
+    table.getColumn("dtFechaBloqueo")?.setFilterValue(dateFilter);
+  };
 
   return (
     <div className="relative w-full ">
@@ -153,12 +192,34 @@ const MultaDataTable = () => {
 
           <div className="flex gap-2 items-center px-4">
             <span>Desde:</span>
-            <Input type="date" className="max-w-36" />
+            <Input
+              type="date"
+              className="max-w-36"
+              onChange={(event) => {
+                const dateFilter = table
+                  .getColumn("dtFechaBloqueo")
+                  ?.getFilterValue() as DateFilter | undefined;
+                const startDate = event.target.value;
+                const endDate = dateFilter?.endDate;
+                handleDateChange(startDate, endDate || "");
+              }}
+            />
           </div>
 
           <div className="flex gap-2 items-center">
             <span>Hasta:</span>
-            <Input type="date" className="max-w-36" />
+            <Input
+              type="date"
+              className="max-w-36"
+              onChange={(event) => {
+                const dateFilter = table
+                  .getColumn("dtFechaBloqueo")
+                  ?.getFilterValue() as DateFilter | undefined;
+                const startDate = dateFilter?.startDate;
+                const endDate = event.target.value;
+                handleDateChange(startDate || "", endDate);
+              }}
+            />
           </div>
         </div>
       </div>

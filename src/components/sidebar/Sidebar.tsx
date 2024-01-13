@@ -33,10 +33,10 @@ const Sidebar = ({toggleBar, setToggleBar}: Props) => {
     },
     {
       title: "Tipos de Cepo",
-      path: "cepo",
+      path: "tipocepo",
       icon: <Cog />,
       active:
-        location.pathname === "/cepo" ? "bg-accent hover:text-white" : "",
+        location.pathname === "/tipocepo" ? "bg-accent hover:text-white" : "",
     },
     {
       title: "Empresas",

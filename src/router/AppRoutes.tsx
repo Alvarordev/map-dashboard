@@ -4,6 +4,7 @@ import Home from "../pages/Home";
 import Login from "../pages/Login";
 import Multas from "../pages/Multas";
 import NotFound from "../pages/NotFound";
+import TipoCepo from "../pages/TipoCepo";
 
 export const privateRoutes = [
   {
@@ -17,6 +18,10 @@ export const privateRoutes = [
   {
     path: "/multas",
     element: <Multas />,
+  },
+  {
+    path: "/tipocepo",
+    element: <TipoCepo />,
   },
   {
     path: "/empresas",
