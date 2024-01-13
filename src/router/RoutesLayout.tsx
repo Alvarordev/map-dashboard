@@ -3,6 +3,7 @@ import Sidebar from "../components/sidebar/Sidebar";
 import { UserData, setInitializeAuth } from "../redux/slices/auth.slice";
 import { useEffect, useMemo, useState } from "react";
 import { useAppDispatch } from "../redux/store";
+import { isValidToken } from "../utils/authUtils";
 
 const RoutesLayout = (userData: any) => {
   const isAuthenticated = useMemo(() => {
@@ -14,6 +15,14 @@ const RoutesLayout = (userData: any) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const accessToken = localStorage.getItem("accessToken");
+
+  useEffect(() => {
+    if (!accessToken) return;
+
+    if (!isValidToken(accessToken)) {
+      navigate("/login");
+    }
+  }, [accessToken]);
 
   useEffect(() => {
     if (!isAuthenticated(userData, accessToken)) {
@@ -31,7 +40,9 @@ const RoutesLayout = (userData: any) => {
     <main className="flex text-primary min-h-screen bg-background">
       <Sidebar toggleBar={toggleBar} setToggleBar={expandBar} />
       <div
-        className={`${toggleBar ? "ml-24" : "ml-64"} p-8 w-full relative transition-all`}
+        className={`${
+          toggleBar ? "ml-24" : "ml-64"
+        } p-8 w-full relative transition-all`}
       >
         <Outlet />
       </div>

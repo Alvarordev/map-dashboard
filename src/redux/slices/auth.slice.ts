@@ -88,7 +88,7 @@ export const loginAsync = createAsyncThunk(
 
       navigate("/ds/dashboard");
 
-      return { accessToken, userData, error };
+      return { accessToken, userData };
     } catch (err: any) {
       return rejectWithValue({
         error: err.response.data.message,

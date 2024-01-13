@@ -3,15 +3,18 @@ import {
   ColumnDef,
   flexRender,
   getCoreRowModel,
+  ColumnFiltersState,
+  getFilteredRowModel,
 } from "@tanstack/react-table";
 import MoveToMarker from "../map/MoveToMarker";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Badge } from "../ui/Badge";
 import { Map } from "leaflet";
 import { useMulta } from "../../hooks/useMulta";
 import { Button } from "../ui/Button";
 import { useModal } from "../../context/ModalProvider";
 import MultaForm from "./MultaForm";
+import { Input } from "../ui/Input";
 
 interface Props {
   map: Map | null;
@@ -123,21 +126,62 @@ const DataTable = ({ map }: Props) => {
     },
   ];
 
+  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
+
   const table = useReactTable({
     data: multas,
     columns,
     getCoreRowModel: getCoreRowModel(),
+    onColumnFiltersChange: setColumnFilters,
+    getFilteredRowModel: getFilteredRowModel(),
+    state: {
+      columnFilters,
+    },
   });
 
+  console.log(table.getCoreRowModel());
+
   return (
-    <div className="relative w-full overflow-auto">
-      <Button
-        size="sm"
-        className="mb-3"
-        onClick={() => openModal(<MultaForm />)}
-      >
-        <span>Registrar Incidencia</span>
-      </Button>
+    <div className="relative w-full ">
+      <div className="flex items-center gap-6 mb-3">
+        <Button size="sm" onClick={() => openModal(<MultaForm />)}>
+          <span>Registrar Incidencia</span>
+        </Button>
+
+        <div className="flex w-full items-center gap-2">
+          <span>Buscar por:</span>
+
+          <Input
+            placeholder="Filtrar por placa..."
+            value={
+              (table.getColumn("vPlacaAuto")?.getFilterValue() as string) ?? ""
+            }
+            onChange={(event) =>
+              table.getColumn("vPlacaAuto")?.setFilterValue(event.target.value)
+            }
+            className="max-w-xs h-8"
+          />
+
+          <select
+            className="flex h-8 rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors"
+            onChange={(event) =>
+              table
+                .getColumn("bEstadoRegistro")
+                ?.setFilterValue(
+                  event.target.value === "true"
+                    ? true
+                    : event.target.value === "false"
+                    ? false
+                    : table.getColumn("iCodMultas")?.getFilterValue()
+                )
+            }
+          >
+            <option value="default">Estado de cepo</option>
+            <option value="true">bloqueado</option>
+            <option value="false">liberado</option>
+          </select>
+        </div>
+      </div>
 
       <table className="w-full caption-bottom text-sm">
         <thead className="[&_tr]:border-b [&_tr]:border-t">

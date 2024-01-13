@@ -1,5 +1,5 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { LayoutDashboard, LogOut, PanelLeft, Building2 } from "lucide-react";
+import { LayoutDashboard, LogOut, PanelLeft, Building2, Cog, FileText } from "lucide-react";
 import { Button } from "../ui/Button";
 import { useAuth } from "../../hooks/useAuth";
 
@@ -23,6 +23,20 @@ const Sidebar = ({toggleBar, setToggleBar}: Props) => {
         location.pathname === "/ds/dashboard"
           ? "bg-accent hover:text-white"
           : "",
+    },
+    {
+      title: "Multas",
+      path: "multas",
+      icon: <FileText />,
+      active:
+        location.pathname === "/multas" ? "bg-accent hover:text-white" : "",
+    },
+    {
+      title: "Tipos de Cepo",
+      path: "cepo",
+      icon: <Cog />,
+      active:
+        location.pathname === "/cepo" ? "bg-accent hover:text-white" : "",
     },
     {
       title: "Empresas",
