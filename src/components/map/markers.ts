@@ -1,22 +1,22 @@
 export interface Marker {
   geocode: geoCode;
-  estado: boolean
+  estado: boolean;
+  id: number;
+  tipo: number;
+  direccion: string;
+  concepto: string;
+  estadoPago?: string | Date | null;
 }
 
-export const fetchMarkers = async () => {
-  const response = await fetch(`${process.env.REACT_APP_API_URL}/multa`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-    },
-  });
-
-  const multas: Multa[] = await response.json();
-
+export const fetchMarkers = async (multas: Multa[]) => {
   const markers: Marker[] = multas.map((multa) => ({
     geocode: [multa.gCoordenadasXMulta, multa.gCoordenadasYMulta],
-    estado: multa.bEstadoRegistro
+    estado: multa.bEstadoRegistro,
+    id: multa.iCodMulta,
+    tipo: multa.iCodTipoCepo,
+    direccion: multa.vDireccionMulta,
+    concepto: multa.vConceptoMulta,
+    estadoPago: multa.dFechaPago,
   }));
 
   return markers;

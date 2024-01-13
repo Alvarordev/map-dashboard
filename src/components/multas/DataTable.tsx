@@ -6,43 +6,19 @@ import {
   ColumnFiltersState,
   getFilteredRowModel,
 } from "@tanstack/react-table";
-import MoveToMarker from "../map/MoveToMarker";
 import { useEffect, useState } from "react";
 import { Badge } from "../ui/Badge";
-import { Map } from "leaflet";
 import { useMulta } from "../../hooks/useMulta";
-import { Button } from "../ui/Button";
-import { useModal } from "../../context/ModalProvider";
-import MultaForm from "./MultaForm";
 import { Input } from "../ui/Input";
 
-interface Props {
-  map: Map | null;
-}
-
-const DataTable = ({ map }: Props) => {
+const MultaDataTable = () => {
   const { multas, getAllMultas } = useMulta();
-  const { openModal } = useModal();
 
   useEffect(() => {
     getAllMultas();
   }, []);
 
   const columns: ColumnDef<Multa>[] = [
-    {
-      header: "Opciones",
-      cell: ({ row }: { row: any }) => {
-        const coords: geoCode = [
-          multas[row.id].gCoordenadasXMulta,
-          multas[row.id].gCoordenadasYMulta,
-        ];
-        return (
-          <div className="w-full flex justify-center items-center">
-            <MoveToMarker coords={coords} map={map} />
-          </div>
-        );
-      },
-    },
     {
       header: "Id",
       accessorKey: "iCodMulta",
@@ -142,10 +118,6 @@ const DataTable = ({ map }: Props) => {
   return (
     <div className="relative w-full ">
       <div className="flex items-center gap-6 mb-3">
-        <Button size="sm" onClick={() => openModal(<MultaForm />)}>
-          <span>Registrar Incidencia</span>
-        </Button>
-
         <div className="flex w-full items-center gap-2">
           <span>Buscar por:</span>
 
@@ -178,6 +150,16 @@ const DataTable = ({ map }: Props) => {
             <option value="true">bloqueado</option>
             <option value="false">liberado</option>
           </select>
+
+          <div className="flex gap-2 items-center px-4">
+            <span>Desde:</span>
+            <Input type="date" className="max-w-36" />
+          </div>
+
+          <div className="flex gap-2 items-center">
+            <span>Hasta:</span>
+            <Input type="date" className="max-w-36" />
+          </div>
         </div>
       </div>
 
@@ -216,4 +198,4 @@ const DataTable = ({ map }: Props) => {
   );
 };
 
-export default DataTable;
+export default MultaDataTable;

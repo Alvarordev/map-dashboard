@@ -1,4 +1,4 @@
-import { MapContainer, Marker, TileLayer } from "react-leaflet";
+import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 import { Icon, Map } from "leaflet";
 import RedPin from "../../assets/icons/map-pin.svg";
 import GreenPin from "../../assets/icons/map-pin-green.svg";
@@ -7,6 +7,7 @@ import { type Marker as MarkerType, fetchMarkers } from "./markers";
 import { useCallback, useEffect, useMemo, useState } from "react";
 
 import "leaflet/dist/leaflet.css";
+import { useMulta } from "../../hooks/useMulta";
 
 const SetMapFunction = ({ map }: { map: Map }) => {
   const onClick = useCallback(() => {
@@ -44,10 +45,11 @@ const MapView = ({ onMapChange }: Props) => {
   const position: geoCode = [-12.0910215, -77.0472762];
   const [markers, setMarkers] = useState<MarkerType[]>([]);
   const [map, setMap] = useState<Map | null>(null);
+  const { multas } = useMulta();
 
   useEffect(() => {
     fetchMarkersAndSetState();
-  }, []);
+  }, [multas]);
 
   useEffect(() => {
     updateMap();
@@ -58,7 +60,7 @@ const MapView = ({ onMapChange }: Props) => {
   };
 
   const fetchMarkersAndSetState = async () => {
-    const response = await fetchMarkers();
+    const response = await fetchMarkers(multas);
     setMarkers(response);
   };
 
@@ -86,7 +88,21 @@ const MapView = ({ onMapChange }: Props) => {
             key={index}
             position={marker.geocode}
             icon={marker.estado ? redPin : greenPin}
-          ></Marker>
+          >
+            <Popup>
+              <ul className="flex flex-col">
+                <li>Multa: {marker.id}</li>
+                <li>Tipo: {marker.tipo === 1 ? 'Liviano' : 'Pesado'}</li>
+                <li>Dirección: {marker.direccion}</li>
+                <li>
+                  Estado del cepo: {marker.estado ? "Bloqueado" : "Liberado"}
+                </li>
+                <li>
+                  Estado del pago: {marker.estadoPago ? "Pagado" : "Pendiente"}
+                </li>
+              </ul>
+            </Popup>
+          </Marker>
         ))}
       </MapContainer>
     ),

@@ -16,7 +16,7 @@ interface Multa {
     vCodigoPreliquidacion: string
     dFechaPago?: Date | string | null
     iCodUsuarioBloqueo?: number | null
-    dtFechaBloqueo?: Date | string | null
+    dtFechaBloqueo: Date | string 
     iCodUsuarioDesbloqueo?: number | null
     dtFechaDesbloqueo?: Date | null
     bEstadoRegistro: boolean
