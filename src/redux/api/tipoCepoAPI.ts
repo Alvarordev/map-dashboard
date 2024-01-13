@@ -5,7 +5,7 @@ interface GetAllProps {
   data?: Tipocepo[] | null;
 }
 
-export const getAllMultas = async (): Promise<GetAllProps> => {
+export const getAllCepos = async (): Promise<GetAllProps> => {
   try {
     const res = await API.get("/tipocepo", {
       headers: {
@@ -15,6 +15,34 @@ export const getAllMultas = async (): Promise<GetAllProps> => {
 
     return { error: null, data: res.data };
   } catch (err: any) {
+    return { error: err, data: null };
+  }
+};
+
+export const createCepo = async (cepo: Tipocepo): Promise<{data: Tipocepo | null, error: any}> => {
+  try {
+    const res = await API.post("/tipocepo", cepo, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    return { error: null, data: res.data };
+  } catch (err) {
+    return { error: err, data: null };
+  }
+};
+
+export const updateCepo = async (cepo: Tipocepo): Promise<{data: Tipocepo | null, error: any}> => {
+  try {
+    const res = await API.patch("/tipocepo", cepo, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    return { error: null, data: res.data };
+  } catch (err) {
     return { error: err, data: null };
   }
 };

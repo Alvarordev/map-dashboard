@@ -46,6 +46,11 @@ const DataTable = ({ map }: Props) => {
     {
       header: "Id",
       accessorKey: "iCodMulta",
+      cell: ({ row }) => {
+        return (
+          <div className={`text-center min-w-4`}>{row.getValue("iCodMulta")}</div>
+        );
+      },
     },
     {
       header: "Placa Auto",
@@ -55,6 +60,31 @@ const DataTable = ({ map }: Props) => {
           <div className={`text-center`}>{row.getValue("vPlacaAuto")}</div>
         );
       },
+    },
+    {
+      header: "Tipo auto",
+      accessorKey: "tipocepo.vDescripcionCepo",
+      cell: ({ row }) => {
+        return (
+          <div className={`text-center`}>
+            <Badge className={`bg-blue-600`}>
+              {row.original.tipocepo.vDescripcionCepo}
+            </Badge>
+          </div>
+        );
+      },
+    },
+    {
+      header: "Dirección",
+      accessorKey: "vDireccionMulta",
+    },
+    {
+      header: "Concepto",
+      accessorKey: "vConceptoMulta",
+    },
+    {
+      header: "Costo",
+      accessorKey: "tipocepo.vCostoCepo",
     },
     {
       header: "Estado",
@@ -75,25 +105,7 @@ const DataTable = ({ map }: Props) => {
       header: "Proforma",
       accessorKey: "vCodigoPreliquidacion",
     },
-    {
-      header: "Tipo auto",
-      accessorKey: "iCodTipoCepo",
-      cell: ({ row }) => {
-        const tipo = row.getValue("iCodTipoCepo");
 
-        return (
-          <div className={`text-center`}>
-            <Badge className={`${tipo ? "bg-blue-600" : "bg-orange-600"}`}>
-              {tipo === 1 ? "liviano" : "pesado"}
-            </Badge>
-          </div>
-        );
-      },
-    },
-    {
-      header: "Dirección",
-      accessorKey: "vDireccionMulta",
-    },
     {
       header: "Fecha bloqueo",
       accessorKey: "dtFechaBloqueo",
@@ -119,10 +131,6 @@ const DataTable = ({ map }: Props) => {
 
         return <div className={`text-center`}>{formattedDate}</div>;
       },
-    },
-    {
-      header: "Usuario Libera",
-      accessorKey: "usuariodesbloqueo.vAliasUsuario",
     },
   ];
 

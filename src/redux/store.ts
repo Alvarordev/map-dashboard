@@ -3,11 +3,13 @@ import { authReducer, initializeAuthAsync } from "./slices/auth.slice";
 import { multaReducer } from "./slices/multa.slice";
 import { useDispatch, useSelector } from "react-redux";
 import type { TypedUseSelectorHook } from "react-redux";
+import { cepoReducer } from "./slices/cepo.slice";
 
 export const store = configureStore({
   reducer: {
     auth: authReducer,
-    multa: multaReducer
+    multa: multaReducer,
+    cepo: cepoReducer
   },
 });
 

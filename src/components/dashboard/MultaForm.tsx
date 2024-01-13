@@ -69,7 +69,7 @@ const MultaForm = () => {
       </div>
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="flex flex-wrap gap-3 w-[600px] px-2"
+        className="flex flex-wrap gap-3 w-[650px] px-2"
       >
         <div className="flex flex-col">
           <label>Tipo de cepo</label>
