@@ -30,7 +30,7 @@ const CepoDataTable = () => {
     <div className="relative w-full ">
       <div className="flex items-center gap-6 mb-3">
         <Button size="sm" onClick={() => openModal(<CepoForm />)}>
-          <span>Registrar Incidencia</span>
+          <span>Registrar Cepo</span>
         </Button>
       </div>
       <table className="w-full caption-bottom text-sm border text-center">

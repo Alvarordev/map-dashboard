@@ -46,8 +46,6 @@ const CepoForm = () => {
 
     const res = await createCepo(cepo);
 
-    console.log(res);
-
     if (res) {
       toast.success("Se creó correctamente la incidencia");
       reset();

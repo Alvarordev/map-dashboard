@@ -5,6 +5,8 @@ import { useAuth } from "../../hooks/useAuth";
 import { useMulta } from "../../hooks/useMulta";
 import { useModal } from "../../context/ModalProvider";
 import { toast } from "sonner";
+import { useCepo } from "../../hooks/useCepo";
+import { useEffect } from "react";
 // import * as z from "zod";
 
 // const schema = z.object({
@@ -26,6 +28,11 @@ const MultaForm = () => {
   const { userData } = useAuth();
   const { createMulta } = useMulta();
   const { closeModal } = useModal();
+  const { getAllCepos, cepos } = useCepo();
+
+  useEffect(() => {
+    getAllCepos();
+  }, []);
 
   const {
     register,
@@ -73,11 +80,17 @@ const MultaForm = () => {
       >
         <div className="flex flex-col">
           <label>Tipo de cepo</label>
-          <Input
+          <select
             {...register("iCodTipoCepo")}
-            type="text"
-            placeholder="Liviano"
-          />
+            className="flex w-[206px] h-9 rounded-sm border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors"
+          >
+            <option value="choose" selected disabled >
+              Elige uno
+            </option>
+            {cepos.map((cepo) => (
+              <option value={cepo.iCodTipoCepo}>{cepo.vDescripcionCepo}</option>
+            ))}
+          </select>
         </div>
         <div className="flex flex-col">
           <label>Direccion</label>
