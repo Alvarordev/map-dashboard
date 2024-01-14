@@ -90,6 +90,7 @@ const MultaDataTable = () => {
     {
       header: "Fecha bloqueo",
       accessorKey: "dtFechaBloqueo",
+      filterFn: "dateFilter" as any,
       cell: ({ row }) => {
         const formattedDate = new Date(
           row.getValue("dtFechaBloqueo")
