@@ -7,9 +7,13 @@ import {
 import { columns } from "./Columns";
 import { useCepo } from "../../hooks/useCepo";
 import { useEffect } from "react";
+import { Button } from "../ui/Button";
+import { useModal } from "../../context/ModalProvider";
+import CepoForm from "./CepoForm";
 
 const CepoDataTable = () => {
   const { cepos, getAllCepos } = useCepo();
+  const { openModal } = useModal();
 
   useEffect(() => {
     getAllCepos();
@@ -24,6 +28,11 @@ const CepoDataTable = () => {
 
   return (
     <div className="relative w-full ">
+      <div className="flex items-center gap-6 mb-3">
+        <Button size="sm" onClick={() => openModal(<CepoForm />)}>
+          <span>Registrar Incidencia</span>
+        </Button>
+      </div>
       <table className="w-full caption-bottom text-sm border text-center">
         <thead className="[&_tr]:border-b [&_tr]:border-t">
           {table.getHeaderGroups().map((headerGroup) => (

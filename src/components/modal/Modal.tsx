@@ -21,7 +21,7 @@ export function Modal({ children, show, handleClose, className }: Props) {
       md:items-center 
       `}
     >
-      <section className="max-w-4xl bg-background shadow-xl flex-1 rounded-t-[1rem] absolute z-50 md:rounded-[1rem]">
+      <section className="max-w-3xl bg-background shadow-xl flex-1 rounded-t-[1rem] absolute z-50 md:rounded-[1rem]">
         <Button
           variant="ghost"
           className="absolute right-2 top-2"
