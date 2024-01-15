@@ -8,12 +8,12 @@ import { ModalProvider } from "./context/ModalProvider";
 const AppContainer = () => {
   return (
     <Provider store={store}>
-      <ModalProvider>
-        <>
-          <Toaster position="top-center" richColors />
-          <App />
-        </>
-      </ModalProvider>
+        <ModalProvider>
+          <>
+            <Toaster position="top-center" richColors />
+            <App />
+          </>
+        </ModalProvider>
     </Provider>
   );
 };

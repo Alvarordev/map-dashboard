@@ -5,63 +5,50 @@ import { useAuth } from "../../hooks/useAuth";
 import { useModal } from "../../context/ModalProvider";
 import { toast } from "sonner";
 import { useCepo } from "../../hooks/useCepo";
-// import * as z from "zod";
 
-// const schema = z.object({
-//   tipoCepo: z.string().min(1).max(255),
-//   direccion: z.string().min(1).max(255),
-//   conceptoMulta: z.string().min(1).max(255),
-//   costoMulta: z.string().min(1).max(255),
-//   tarjetaPropiedad: z.string().min(1).max(255),
-//   licenciaConducir: z.string().min(1).max(255),
-//   placaAuto: z.string().min(1).max(255),
-//   marcaAuto: z.string().min(1).max(255),
-//   modeloAuto: z.string().min(1).max(255),
-//   colorAuto: z.string().min(1).max(255),
-//   numeroLlantas: z.string().min(1).max(255),
-//   preliquidacion: z.string().min(1).max(255),
-// });
-
-
-
-const CepoForm = () => {
+const EditCepoForm = ({ dataCepo }: { dataCepo: Tipocepo }) => {
   const { userData } = useAuth();
-  const { createCepo } = useCepo();
+  const { updateCepo, error } = useCepo();
   const { closeModal } = useModal();
+
+  const initialValues = {
+    vDescripcionCepo: dataCepo.vDescripcionCepo,
+    vCostoCepo: dataCepo.vCostoCepo,
+  };
 
   const {
     register,
     handleSubmit,
     reset,
     formState: { isSubmitting },
-  } = useForm();
+  } = useForm({ defaultValues: initialValues });
 
   const onSubmit = async (data: FieldValues) => {
     if (!userData) return;
 
     const cepo: any = {
-      ...data,
-      iCodEmpresa: +userData.iCodEmpresa,
-      iCodigoUsuarioCreacion: +userData.iCodUsuario,
-      vCostoCepo: +data.vCostoCepo
+      iCodTipoCepo: dataCepo.iCodTipoCepo,
+      vDescripcionCepo: data.vDescripcionCepo,
+      vCostoCepo: +data.vCostoCepo,
+      dtFechaModificacion: new Date().toISOString(),
+      iCodigoUsuarioModificacion: dataCepo.iCodigoUsuarioCreacion,
     };
 
-    const res = await createCepo(cepo);
+    const res = await updateCepo(cepo);
+    console.log(res)
 
-    if (res) {
-      toast.success("Se creó correctamente");
+    if (!error) {
+      toast.success("Se guardaron los cambios");
       reset();
       closeModal();
     } else {
-      toast.error("Hubo un error al crear el cepo, intente otra vez");
+      toast.error("Hubo un error al guardar los cambios, intente otra vez");
     }
   };
 
   return (
     <>
-      <div className="text-lg font-semibold text-center pb-5">
-        Registrar Cepo
-      </div>
+      <div className="text-lg font-semibold text-center pb-5">Editar Cepo</div>
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="flex flex-wrap w-[250px] justify-center gap-3"
@@ -85,7 +72,7 @@ const CepoForm = () => {
 
         <div className="flex w-full justify-center">
           <Button type="submit" className="w-full" disabled={isSubmitting}>
-            Registrar
+            Guardar
           </Button>
         </div>
       </form>
@@ -93,4 +80,4 @@ const CepoForm = () => {
   );
 };
 
-export default CepoForm;
+export default EditCepoForm;

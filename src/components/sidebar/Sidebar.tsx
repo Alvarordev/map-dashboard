@@ -1,14 +1,23 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { LayoutDashboard, LogOut, PanelLeft, Building2, Cog, FileText } from "lucide-react";
+import {
+  LayoutDashboard,
+  LogOut,
+  PanelLeft,
+  Building2,
+  Cog,
+  FileText,
+  Settings2,
+} from "lucide-react";
 import { Button } from "../ui/Button";
 import { useAuth } from "../../hooks/useAuth";
+import Logo from "../../assets/logo.png";
 
 interface Props {
-  toggleBar: boolean,
-  setToggleBar: React.Dispatch<React.SetStateAction<boolean>>
+  toggleBar: boolean;
+  setToggleBar: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const Sidebar = ({toggleBar, setToggleBar}: Props) => {
+const Sidebar = ({ toggleBar, setToggleBar }: Props) => {
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -45,22 +54,31 @@ const Sidebar = ({toggleBar, setToggleBar}: Props) => {
       active:
         location.pathname === "/empresas" ? "bg-accent hover:text-white" : "",
     },
+    {
+      title: "Preferencias",
+      path: "preferencias",
+      icon: <Settings2 />,
+      active:
+        location.pathname === "/preferencias"
+          ? "bg-accent hover:text-white"
+          : "",
+    },
   ];
 
   return (
     <aside
       className={`${
         toggleBar ? "max-w-24" : "max-w-64"
-      } text-primary-foreground bg-foreground flex flex-col min-h-full w-full  py-8 px-6 transition-all fixed`}
+      } text-primary-foreground bg-foreground flex flex-col min-h-full w-full py-8 px-6 transition-all fixed`}
     >
       <header className="flex justify-between items-center pb-10">
-        <h2
+        <div
           className={`${
             toggleBar ? "hidden" : ""
           } text-center text-2xl font-semibold`}
         >
-          LOGO
-        </h2>
+          Logo
+        </div>
 
         <Button
           variant="ghost"
@@ -72,15 +90,23 @@ const Sidebar = ({toggleBar, setToggleBar}: Props) => {
         </Button>
       </header>
 
+      <h3
+        className={`${
+          toggleBar ? "hidden" : ""
+        } text-sm font-semibold text-center border-b pb-3 border-muted-foreground`}
+      >
+        Municipalidad de prueba
+      </h3>
+
       <ul className="flex flex-col gap-2.5 py-5">
         {routes.map((route) => (
           <Link key={route.path} to={route.path}>
             <li
               className={`${route.active} ${
                 toggleBar && "justify-center"
-              } flex gap-2 items-center py-2 px-5 rounded-xl transition-all hover:text-accent`}
+              } text-sm flex gap-2 items-center py-2 px-4 rounded-md transition-all hover:text-accent`}
             >
-              <span className="h-full">{route.icon}</span>
+              <span className="h-full [&>svg]:h-5">{route.icon}</span>
               <span className={`${toggleBar ? "hidden" : ""}`}>
                 {route.title}
               </span>

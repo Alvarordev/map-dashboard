@@ -1,9 +1,9 @@
-import { createCepoAsync, getAllCeposAsync } from "../redux/slices/cepo.slice";
+import { createCepoAsync, getAllCeposAsync, updateCepoAsync } from "../redux/slices/cepo.slice";
 import { useAppDispatch, useAppSelector } from "../redux/store";
 
 export const useCepo = () => {
   const dispatch = useAppDispatch();
-  const { cepos, created, isLoading, error } = useAppSelector((state) => state.cepo);
+  const { cepos, created, updated, isLoading, error } = useAppSelector((state) => state.cepo);
 
   const getAllCepos = () => {
     dispatch(getAllCeposAsync());
@@ -13,5 +13,9 @@ export const useCepo = () => {
     return dispatch(createCepoAsync(cepo))
   }
 
-  return { getAllCepos, createCepo , cepos, created, isLoading, error };
+  const updateCepo = (cepo: Tipocepo) => {
+    return dispatch(updateCepoAsync(cepo))
+  }
+
+  return { getAllCepos, createCepo, updateCepo , cepos, created, updated, isLoading, error };
 };

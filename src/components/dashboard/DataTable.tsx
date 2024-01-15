@@ -48,7 +48,9 @@ const DataTable = ({ map }: Props) => {
       accessorKey: "iCodMulta",
       cell: ({ row }) => {
         return (
-          <div className={`text-center min-w-4`}>{row.getValue("iCodMulta")}</div>
+          <div className={`text-center min-w-4`}>
+            {row.getValue("iCodMulta")}
+          </div>
         );
       },
     },
@@ -85,6 +87,13 @@ const DataTable = ({ map }: Props) => {
     {
       header: "Costo",
       accessorKey: "tipocepo.vCostoCepo",
+      cell: ({ row }) => {
+        return (
+          <div className="text-center">
+            S/.{row.original.tipocepo.vCostoCepo}
+          </div>
+        );
+      },
     },
     {
       header: "Estado",
@@ -118,7 +127,7 @@ const DataTable = ({ map }: Props) => {
       },
     },
     {
-      header: "Usuario Bloqueo",
+      header: "Usuario",
       accessorKey: "usuariobloqueo.vAliasUsuario",
     },
     {

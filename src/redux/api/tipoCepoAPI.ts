@@ -35,7 +35,9 @@ export const createCepo = async (cepo: Tipocepo): Promise<{data: Tipocepo | null
 
 export const updateCepo = async (cepo: Tipocepo): Promise<{data: Tipocepo | null, error: any}> => {
   try {
-    const res = await API.patch("/tipocepo", cepo, {
+    const {iCodTipoCepo, ...cepoBody} = cepo 
+
+    const res = await API.patch(`/tipocepo/${iCodTipoCepo}`, cepoBody, {
       headers: {
         "Content-Type": "application/json",
       },

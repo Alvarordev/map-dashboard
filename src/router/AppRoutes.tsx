@@ -5,6 +5,7 @@ import Login from "../pages/Login";
 import Multas from "../pages/Multas";
 import NotFound from "../pages/NotFound";
 import TipoCepo from "../pages/TipoCepo";
+import Preferences from "../pages/Preferences";
 
 export const privateRoutes = [
   {
@@ -26,6 +27,10 @@ export const privateRoutes = [
   {
     path: "/empresas",
     element: <Empresas />,
+  },
+  {
+    path: "/preferencias",
+    element: <Preferences />,
   },
 ];
 

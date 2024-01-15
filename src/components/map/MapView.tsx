@@ -5,9 +5,9 @@ import GreenPin from "../../assets/icons/map-pin-green.svg";
 import { Button } from "../ui/Button";
 import { type Marker as MarkerType, fetchMarkers } from "./markers";
 import { useCallback, useEffect, useMemo, useState } from "react";
+import { useMulta } from "../../hooks/useMulta";
 
 import "leaflet/dist/leaflet.css";
-import { useMulta } from "../../hooks/useMulta";
 
 const SetMapFunction = ({ map }: { map: Map }) => {
   const onClick = useCallback(() => {
