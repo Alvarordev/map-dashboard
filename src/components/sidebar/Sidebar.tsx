@@ -10,7 +10,6 @@ import {
 } from "lucide-react";
 import { Button } from "../ui/Button";
 import { useAuth } from "../../hooks/useAuth";
-import Logo from "../../assets/logo.png";
 
 interface Props {
   toggleBar: boolean;
