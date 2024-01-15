@@ -97,7 +97,7 @@ const MultaForm = () => {
           <Input
             {...register("vDireccionMulta")}
             type="text"
-            placeholder="Direccion falsa 123"
+            placeholder="Ej: Direccion falsa 123"
           />
         </div>
         <div className="flex flex-col">
@@ -105,7 +105,7 @@ const MultaForm = () => {
           <Input
             {...register("vConceptoMulta")}
             type="text"
-            placeholder="Concepto 1"
+            placeholder="Ej: Mal estacionado"
           />
         </div>
         <div className="flex flex-col">
@@ -113,7 +113,7 @@ const MultaForm = () => {
           <Input
             {...register("vTarjetaPropiedad")}
             type="text"
-            placeholder="12345678"
+            placeholder="Ej: 12345678"
           />
         </div>
         <div className="flex flex-col">
@@ -121,7 +121,7 @@ const MultaForm = () => {
           <Input
             {...register("vLicenciaConducir")}
             type="text"
-            placeholder="Q12345678"
+            placeholder="Ej: Q12345678"
           />
         </div>
         <div className="flex flex-col">
@@ -129,27 +129,27 @@ const MultaForm = () => {
           <Input
             {...register("vPlacaAuto")}
             type="text"
-            placeholder="ABC-123"
+            placeholder="Ej: ABC-123"
           />
         </div>
         <div className="flex flex-col">
           <label>Marca auto</label>
-          <Input {...register("vMarcaAuto")} type="text" placeholder="Tesla" />
+          <Input {...register("vMarcaAuto")} type="text" placeholder="Ej: Nissan" />
         </div>
         <div className="flex flex-col">
           <label>Modelo auto</label>
-          <Input {...register("vModeloAuto")} type="text" placeholder="X" />
+          <Input {...register("vModeloAuto")} type="text" placeholder="Ej: Centra" />
         </div>
         <div className="flex flex-col">
           <label>Color auto</label>
-          <Input {...register("vColorAuto")} type="text" placeholder="Blanco" />
+          <Input {...register("vColorAuto")} type="text" placeholder="Ej: Blanco" />
         </div>
         <div className="flex flex-col">
           <label>Numero llantas</label>
           <Input
             {...register("iNumeroLlantas")}
             type="number"
-            placeholder="4"
+            placeholder="Ej: 4"
           />
         </div>
         <div className="flex flex-col">
@@ -157,7 +157,7 @@ const MultaForm = () => {
           <Input
             {...register("vCodigoPreliquidacion")}
             type="text"
-            placeholder="12345678"
+            placeholder="EJ: 12345678"
           />
         </div>
 
