@@ -1,6 +1,5 @@
 import {
   useReactTable,
-  flexRender,
   getCoreRowModel,
   ColumnFiltersState,
   getFilteredRowModel,
@@ -9,6 +8,7 @@ import { useEffect, useState } from "react";
 import { useMulta } from "../../hooks/useMulta";
 import { Input } from "../ui/Input";
 import { columns } from "./Columns";
+import Table from "../ui/Table";
 
 interface DateFilter {
   startDate: string;
@@ -138,37 +138,7 @@ const MultaDataTable = () => {
         </div>
       </div>
 
-      <table className="w-full caption-bottom text-sm">
-        <thead className="[&_tr]:border-b [&_tr]:border-t">
-          {table.getHeaderGroups().map((headerGroup) => (
-            <tr key={headerGroup.id}>
-              {headerGroup.headers.map((header) => (
-                <th key={header.id}>
-                  {flexRender(
-                    header.column.columnDef.header,
-                    header.getContext()
-                  )}
-                </th>
-              ))}
-            </tr>
-          ))}
-        </thead>
-
-        <tbody className="[&_tr:last-child]:border-0">
-          {table.getRowModel().rows.map((row, index) => (
-            <tr
-              key={row.id}
-              className={index % 2 === 0 ? "bg-background" : "bg-muted"}
-            >
-              {row.getVisibleCells().map((cell) => (
-                <td key={cell.id}>
-                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                </td>
-              ))}
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      <Table table={table} />
     </div>
   );
 };

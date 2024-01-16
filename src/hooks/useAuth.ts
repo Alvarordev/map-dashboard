@@ -1,4 +1,8 @@
-import { LoginProps, loginAsync, logoutAsync } from "../redux/slices/auth.slice";
+import {
+  LoginProps,
+  loginAsync,
+  logoutAsync,
+} from "../redux/slices/auth.slice";
 import { useAppDispatch, useAppSelector } from "../redux/store";
 
 export const useAuth = () => {

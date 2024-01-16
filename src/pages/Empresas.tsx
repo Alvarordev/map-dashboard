@@ -1,7 +1,11 @@
+import EmpresaDataTable from "../components/empresas/DataTable";
+
 const Empresas = () => {
   return (
-    <div className="flex flex-col">
-      <span>Empresas</span>
+    <div>
+      <h2 className="text-xl font-semibold mb-6">Administrar Empresas</h2>
+
+      <EmpresaDataTable />
     </div>
   );
 };
