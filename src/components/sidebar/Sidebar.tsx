@@ -76,7 +76,7 @@ const Sidebar = ({ toggleBar, setToggleBar }: Props) => {
             toggleBar ? "hidden" : ""
           } text-center text-2xl font-semibold`}
         >
-          Logo
+          Logo prueba
         </div>
 
         <Button
@@ -121,8 +121,8 @@ const Sidebar = ({ toggleBar, setToggleBar }: Props) => {
           variant="ghost"
         >
           <>
-            <LogOut />
-            <span className={`${toggleBar ? "hidden" : ""}`}>
+            <LogOut className="h-5"/>
+            <span className={`${toggleBar ? "hidden" : ""} text-sm`}>
               Cerrar sesión
             </span>
           </>
