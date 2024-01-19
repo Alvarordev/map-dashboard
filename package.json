@@ -12,6 +12,7 @@
   "dependencies": {
     "@reduxjs/toolkit": "^2.0.1",
     "@tanstack/react-table": "^8.11.3",
+    "@tremor/react": "^3.13.1",
     "axios": "^1.6.5",
     "clsx": "^2.1.0",
     "leaflet": "^1.9.4",
