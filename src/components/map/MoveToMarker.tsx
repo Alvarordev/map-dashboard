@@ -9,7 +9,7 @@ interface Props {
 
 const MoveToMarker = ({ coords, map }: Props) => {
   const setMapView = useCallback(() => {
-    map?.setView(coords, 16);
+    map?.setView(coords, 18);
   }, [map]);
 
   return (

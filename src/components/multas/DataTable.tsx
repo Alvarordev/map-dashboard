@@ -9,6 +9,7 @@ import { useMulta } from "../../hooks/useMulta";
 import { Input } from "../ui/Input";
 import { columns } from "./Columns";
 import Table from "../ui/Table";
+import MultaProgressBar from "./MultaChart";
 
 interface DateFilter {
   startDate: string;
@@ -17,10 +18,23 @@ interface DateFilter {
 
 const MultaDataTable = () => {
   const { multas, getAllMultas } = useMulta();
+  const [totalMultas, setTotalMultas] = useState<number | null>(null);
 
   useEffect(() => {
     getAllMultas();
   }, []);
+
+  useEffect(() => {
+    if (multas) {
+      let sum = 0;
+
+      multas.map((multa) => {
+        sum += +multa.tipocepo.vCostoCepo;
+      });
+
+      setTotalMultas(sum);
+    }
+  }, [multas]);
 
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
 
@@ -69,7 +83,11 @@ const MultaDataTable = () => {
   };
 
   return (
-    <div className="relative w-full ">
+    <div className="relative w-full">
+      <div>
+        <MultaProgressBar total={totalMultas} multas={multas}/>
+      </div>
+
       <div className="flex items-center gap-6 mb-3">
         <div className="flex w-full items-center gap-2">
           <span>Buscar por:</span>

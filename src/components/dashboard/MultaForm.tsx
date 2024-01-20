@@ -7,22 +7,6 @@ import { useModal } from "../../context/ModalProvider";
 import { toast } from "sonner";
 import { useCepo } from "../../hooks/useCepo";
 import { useEffect } from "react";
-// import * as z from "zod";
-
-// const schema = z.object({
-//   tipoCepo: z.string().min(1).max(255),
-//   direccion: z.string().min(1).max(255),
-//   conceptoMulta: z.string().min(1).max(255),
-//   costoMulta: z.string().min(1).max(255),
-//   tarjetaPropiedad: z.string().min(1).max(255),
-//   licenciaConducir: z.string().min(1).max(255),
-//   placaAuto: z.string().min(1).max(255),
-//   marcaAuto: z.string().min(1).max(255),
-//   modeloAuto: z.string().min(1).max(255),
-//   colorAuto: z.string().min(1).max(255),
-//   numeroLlantas: z.string().min(1).max(255),
-//   preliquidacion: z.string().min(1).max(255),
-// });
 
 const MultaForm = () => {
   const { userData } = useAuth();
@@ -52,8 +36,8 @@ const MultaForm = () => {
       dtFechaBloqueo: new Date().toJSON(),
       gCoordenadasXMulta: -12.09,
       gCoordenadasYMulta: -77.0507,
-      dpCostoMulta: 500.0,
-      iCodTipoCepo: 1,
+      iCodTipoCepo: +data.iCodTipoCepo,
+      dpCostoMulta: 99.00,
       iNumeroLlantas: +data.iNumeroLlantas,
       dFechaPago: new Date().toJSON(),
     };
@@ -84,11 +68,11 @@ const MultaForm = () => {
             {...register("iCodTipoCepo")}
             className="flex w-[206px] h-9 rounded-sm border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors"
           >
-            <option value="choose" selected disabled >
+            <option value="defaultValue" selected disabled >
               Elige uno
             </option>
             {cepos.map((cepo) => (
-              <option value={cepo.iCodTipoCepo}>{cepo.vDescripcionCepo}</option>
+              <option key={cepo.iCodTipoCepo} value={cepo.iCodTipoCepo}>{cepo.vDescripcionCepo}</option>
             ))}
           </select>
         </div>
