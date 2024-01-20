@@ -39,11 +39,11 @@ const MultaProgressBar = ({
   };
 
   return (
-    <Card className="max-w-md mr-auto rounded-md mb-5">
+    <Card className="max-w-sm mr-auto rounded-md mb-5 p-4">
       <Text>Total Recaudado</Text>
       <Metric>S/. {total}</Metric>
       <AreaChart
-        className="mt-4 h-44"
+        className="mt-4 h-32"
         data={resultArr}
         index="date"
         categories={["costo"]}
