@@ -2,12 +2,12 @@ import { API } from "./utils";
 
 interface GetAllProps {
   error: any;
-  data?: Usuario[] | null;
+  data?: Perfil[] | null;
 }
 
-export const getAllUsers = async (): Promise<GetAllProps> => {
+export const getAllPerfil = async (): Promise<GetAllProps> => {
   try {
-    const res = await API.get("/usuarios", {
+    const res = await API.get("/perfil", {
       headers: {
         "Content-Type": "application/json",
       },
@@ -19,9 +19,11 @@ export const getAllUsers = async (): Promise<GetAllProps> => {
   }
 };
 
-export const createUser = async (user: Usuario): Promise<{data: Usuario | null, error: any}> => {
+export const createPerfil = async (
+  perfil: Perfil
+): Promise<{ data: Perfil | null; error: any }> => {
   try {
-    const res = await API.post("/usuarios", user, {
+    const res = await API.post("/perfil", perfil, {
       headers: {
         "Content-Type": "application/json",
       },
@@ -33,11 +35,13 @@ export const createUser = async (user: Usuario): Promise<{data: Usuario | null, 
   }
 };
 
-export const updateUser = async (user: Usuario): Promise<{data: Usuario | null, error: any}> => {
+export const updatePerfil = async (
+  perfil: Perfil
+): Promise<{ data: Perfil | null; error: any }> => {
   try {
-    const {iCodUsuario, ...userBody} = user 
+    const { iCodPerfil, ...cepoBody } = perfil;
 
-    const res = await API.patch(`/usuarios/${iCodUsuario}`, userBody, {
+    const res = await API.patch(`/perfil/${iCodPerfil}`, cepoBody, {
       headers: {
         "Content-Type": "application/json",
       },

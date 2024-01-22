@@ -5,6 +5,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { cepoReducer } from "./slices/cepo.slice";
 import { empresaReducer } from "./slices/empresa.slice";
 import type { TypedUseSelectorHook } from "react-redux";
+import { perfilReducer } from "./slices/perfil.slice";
+import { userReducer } from "./slices/user.slice";
 
 export const store = configureStore({
   reducer: {
@@ -12,6 +14,8 @@ export const store = configureStore({
     multa: multaReducer,
     cepo: cepoReducer,
     empresa: empresaReducer,
+    perfil: perfilReducer,
+    usuario: userReducer,
   },
 });
 
