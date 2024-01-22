@@ -1,12 +1,13 @@
 import EmpresaDataTable from "../components/empresas/DataTable";
+import Header from "../components/ui/Header";
 
 const Empresas = () => {
   return (
-    <div>
-      <h2 className="text-xl font-semibold mb-6">Administrar Empresas</h2>
+    <>
+      <Header title="Administarar Empresas" />
 
       <EmpresaDataTable />
-    </div>
+    </>
   );
 };
 

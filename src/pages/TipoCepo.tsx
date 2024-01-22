@@ -1,12 +1,13 @@
 import CepoDataTable from "../components/cepos/DataTable";
+import Header from "../components/ui/Header";
 
 const TipoCepo = () => {
   return (
-    <div>
-      <h2 className="text-xl font-semibold mb-6">Administrar Tipos de Cepo</h2>
+    <>
+      <Header title="Administrar tipos de cepo" />
 
       <CepoDataTable />
-    </div>
+    </>
   );
 };
 

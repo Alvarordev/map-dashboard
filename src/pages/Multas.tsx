@@ -1,12 +1,13 @@
 import MultaDataTable from "../components/multas/DataTable";
+import Header from "../components/ui/Header";
 
 const Multas = () => {
   return (
-    <div>
-      <h2 className="text-xl font-semibold mb-6">Administrar Multas</h2>
+    <>
+      <Header title="Administrar multas" />
 
       <MultaDataTable />
-    </div>
+    </>
   );
 };
 

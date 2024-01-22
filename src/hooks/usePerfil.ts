@@ -5,7 +5,7 @@ import {
 } from "../redux/slices/perfil.slice";
 import { useAppDispatch, useAppSelector } from "../redux/store";
 
-export const useUser = () => {
+export const usePerfil = () => {
   const dispatch = useAppDispatch();
   const { perfiles, created, updated, isLoading, error } = useAppSelector(
     (state) => state.perfil

@@ -6,7 +6,7 @@ interface Props {
 
 const Table = ({ table }: Props) => {
   return (
-    <table className="w-full caption-bottom text-sm">
+    <table className="w-full caption-bottom text-sm border">
       <thead className="[&_tr]:border-b [&_tr]:border-t">
         {table.getHeaderGroups().map((headerGroup) => (
           <tr key={headerGroup.id}>

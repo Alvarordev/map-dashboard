@@ -7,6 +7,8 @@ import {
   Cog,
   FileText,
   Settings2,
+  Users,
+  ShieldHalf,
 } from "lucide-react";
 import { Button } from "../ui/Button";
 import { useAuth } from "../../hooks/useAuth";
@@ -45,6 +47,20 @@ const Sidebar = ({ toggleBar, setToggleBar }: Props) => {
       icon: <Cog />,
       active:
         location.pathname === "/tipocepo" ? "bg-accent hover:text-white" : "",
+    },
+    {
+      title: "Perfiles",
+      path: "perfil",
+      icon: <ShieldHalf />,
+      active:
+        location.pathname === "/perfil" ? "bg-accent hover:text-white" : "",
+    },
+    {
+      title: "Usuarios",
+      path: "usuario",
+      icon: <Users />,
+      active:
+        location.pathname === "/usuario" ? "bg-accent hover:text-white" : "",
     },
     {
       title: "Empresas",

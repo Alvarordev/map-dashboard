@@ -37,7 +37,7 @@ const RoutesLayout = (userData: any) => {
   };
 
   return (
-    <main className="flex text-foreground min-h-screen bg-background">
+    <main className="flex text-card-foreground min-h-screen bg-background">
       <Sidebar toggleBar={toggleBar} setToggleBar={expandBar} />
       <div
         className={`${
