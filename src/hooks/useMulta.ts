@@ -1,6 +1,7 @@
 import {
   createMultaAsync,
   getAllMultasAsync,
+  updateMultaAsync,
 } from "../redux/slices/multa.slice";
 import { useAppDispatch, useAppSelector } from "../redux/store";
 
@@ -18,5 +19,17 @@ export const useMulta = () => {
     return dispatch(createMultaAsync(multa));
   };
 
-  return { getAllMultas, createMulta, multas, created, isLoading, error };
+  const updateMulta = (multa: Multa) => {
+    return dispatch(updateMultaAsync(multa));
+  };
+
+  return {
+    getAllMultas,
+    createMulta,
+    updateMulta,
+    multas,
+    created,
+    isLoading,
+    error,
+  };
 };

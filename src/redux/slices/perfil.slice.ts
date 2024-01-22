@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { createPerfil, getAllPerfil, updatePerfil } from "../api/perfilAPI";
 
 interface State {
-  perfil: Perfil[];
+  perfiles: Perfil[];
   created: Perfil | null;
   updated: Perfil | null;
   isLoading: boolean;
@@ -10,7 +10,7 @@ interface State {
 }
 
 const initialState: State = {
-  perfil: [],
+  perfiles: [],
   created: null,
   updated: null,
   isLoading: false,
@@ -82,7 +82,7 @@ const perfilSlice = createSlice({
 
     builder.addCase(getAllPerfilesAsync.fulfilled, (state, action) => {
       state.isLoading = false;
-      state.perfil = action.payload.data;
+      state.perfiles = action.payload.data;
     });
 
     // CREATE
@@ -98,7 +98,7 @@ const perfilSlice = createSlice({
     builder.addCase(createPerfilAsync.fulfilled, (state, action) => {
       state.isLoading = false;
       state.created = action.payload.data;
-      state.perfil.push(action.payload.data);
+      state.perfiles.push(action.payload.data);
     });
 
     // UPDATE
@@ -114,8 +114,8 @@ const perfilSlice = createSlice({
     builder.addCase(updatePerfilAsync.fulfilled, (state, action) => {
       const updated = action.payload.data;
       const id = updated.iCodPerfil;
-      const index = state.perfil.findIndex((item) => item.iCodPerfil === id);
-      state.perfil[index] = updated;
+      const index = state.perfiles.findIndex((item) => item.iCodPerfil === id);
+      state.perfiles[index] = updated;
       state.updated = updated;
       state.isLoading = false;
     });
