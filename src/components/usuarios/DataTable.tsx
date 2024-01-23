@@ -27,7 +27,7 @@ import { useUser } from "../../hooks/useUser";
       <div className="relative w-full ">
         <div className="flex items-center gap-6 mb-3">
           <Button size="sm">
-            <span>Registrar Perfil</span>
+            <span>Registrar Usuario</span>
           </Button>
         </div>
         <Table table={table} />

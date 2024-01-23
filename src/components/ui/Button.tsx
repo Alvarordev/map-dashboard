@@ -21,7 +21,7 @@ export const Button = ({
   ...props
 }: Props) => {
   const variants = {
-    default: "bg-primary text-primary-foreground shadow hover:opacity-90",
+    default: "bg-foreground text-primary-foreground shadow hover:opacity-90",
     destructive:
       "bg-destructive text-destructive-foreground shadow-sm hover:bg-destructive/90",
     outline:
