@@ -39,7 +39,6 @@ const MultaForm = () => {
       iCodTipoCepo: +data.iCodTipoCepo,
       dpCostoMulta: 99.00,
       iNumeroLlantas: +data.iNumeroLlantas,
-      dFechaPago: new Date().toJSON(),
     };
 
     const res = await createMulta(multa);
