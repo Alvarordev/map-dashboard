@@ -6,10 +6,9 @@ import {
   getFilteredRowModel,
 } from "@tanstack/react-table";
 import MoveToMarker from "../map/MoveToMarker";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Badge } from "../ui/Badge";
 import { Map } from "leaflet";
-import { useMulta } from "../../hooks/useMulta";
 import { Button } from "../ui/Button";
 import { useModal } from "../../context/ModalProvider";
 import MultaForm from "./MultaForm";
@@ -18,15 +17,11 @@ import Table from "../ui/Table";
 
 interface Props {
   map: Map | null;
+  multas: Multa[];
 }
 
-const DataTable = ({ map }: Props) => {
-  const { multas, getAllMultas } = useMulta();
+const DataTable = ({ map, multas }: Props) => {
   const { openModal } = useModal();
-
-  useEffect(() => {
-    getAllMultas();
-  }, []);
 
   const columns: ColumnDef<Multa>[] = [
     {

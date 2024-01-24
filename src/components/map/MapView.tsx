@@ -5,29 +5,9 @@ import GreenPin from "../../assets/icons/map-pin-green.svg";
 import { Button } from "../ui/Button";
 import { type Marker as MarkerType, fetchMarkers } from "./markers";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { useMulta } from "../../hooks/useMulta";
 
 import "leaflet/dist/leaflet.css";
 
-const SetMapFunction = ({ map }: { map: Map }) => {
-  const onClick = useCallback(() => {
-    map.setView([-12.0910215, -77.0472762], 13);
-  }, [map]);
-
-  return (
-    <Button
-      size="sm"
-      className="mt-2 absolute top-0 z-[1000] right-2"
-      onClick={onClick}
-    >
-      Reiniciar Mapa
-    </Button>
-  );
-};
-
-interface Props {
-  onMapChange: React.Dispatch<React.SetStateAction<Map | null>>;
-}
 
 const redPin = new Icon({
   iconUrl: RedPin,
@@ -41,11 +21,15 @@ const greenPin = new Icon({
   iconAnchor: [15, 30],
 });
 
-const MapView = ({ onMapChange }: Props) => {
+interface Props {
+  onMapChange: React.Dispatch<React.SetStateAction<Map | null>>;
+  multas: Multa[]
+}
+
+const MapView = ({ onMapChange, multas }: Props) => {
   const position: geoCode = [-12.0910215, -77.0472762];
   const [markers, setMarkers] = useState<MarkerType[]>([]);
   const [map, setMap] = useState<Map | null>(null);
-  const { multas } = useMulta();
 
   useEffect(() => {
     fetchMarkersAndSetState();
@@ -112,9 +96,26 @@ const MapView = ({ onMapChange }: Props) => {
   return (
     <div className="relative">
       {displayMap}
-      {map ? <SetMapFunction map={map} /> : null}
+      {map ? <CenterMapButon map={map} /> : null}
     </div>
   );
 };
 
 export default MapView;
+
+
+const CenterMapButon = ({ map }: { map: Map }) => {
+  const onClick = useCallback(() => {
+    map.setView([-12.0910215, -77.0472762], 13);
+  }, [map]);
+
+  return (
+    <Button
+      size="sm"
+      className="mt-2 absolute top-0 z-[1000] right-2"
+      onClick={onClick}
+    >
+      Reiniciar Mapa
+    </Button>
+  );
+};

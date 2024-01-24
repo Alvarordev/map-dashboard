@@ -7,7 +7,7 @@ import { useAppDispatch, useAppSelector } from "../redux/store";
 
 export const useMulta = () => {
   const dispatch = useAppDispatch();
-  const { multas, created, isLoading, error } = useAppSelector(
+  const { multas, multasToday, created, isLoading, error } = useAppSelector(
     (state) => state.multa
   );
 
@@ -28,6 +28,7 @@ export const useMulta = () => {
     createMulta,
     updateMulta,
     multas,
+    multasToday,
     created,
     isLoading,
     error,
