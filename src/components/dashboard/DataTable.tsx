@@ -106,6 +106,21 @@ const DataTable = ({ map, multas }: Props) => {
       },
     },
     {
+      header: "Estado Pago",
+      accessorKey: "dFechaPago",
+      cell: ({ row }) => {
+        const pagado: Date = row.getValue("dFechaPago");
+
+        return (
+          <div className={`text-center py-2`}>
+            <Badge className={`${pagado ? "bg-blue-500" : "bg-orange-500"}`}>
+              {pagado ? "Pagado" : "Pendiente"}
+            </Badge>
+          </div>
+        );
+      },
+    },
+    {
       header: "Proforma",
       accessorKey: "vCodigoPreliquidacion",
     },

@@ -22,7 +22,9 @@ const Dashboard = () => {
 
   useEffect(() => {
     const newMultas = multasToday.filter(
-      (newMulta) => !previousMultas.some((prevMulta) => prevMulta.iCodMulta === newMulta.iCodMulta)
+      (newMulta) =>
+        !previousMultas.some((prevMulta) => prevMulta.iCodMulta === newMulta.iCodMulta ||
+        prevMulta.dFechaPago !== newMulta.dFechaPago) 
     );
 
     if (newMultas.length > 0) {
