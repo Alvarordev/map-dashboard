@@ -9,6 +9,8 @@ import {
   Settings2,
   Users,
   ShieldHalf,
+  Map,
+  MapPinned,
 } from "lucide-react";
 import { Button } from "../ui/Button";
 import { useAuth } from "../../hooks/useAuth";
@@ -26,9 +28,9 @@ const Sidebar = ({ toggleBar, setToggleBar }: Props) => {
 
   const routes = [
     {
-      title: "Dashboard",
+      title: "Georreferencia",
       path: "ds/dashboard",
-      icon: <LayoutDashboard />,
+      icon: <MapPinned />,
       active:
         location.pathname === "/ds/dashboard"
           ? "bg-accent hover:text-white"

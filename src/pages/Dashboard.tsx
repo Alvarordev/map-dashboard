@@ -1,34 +1,38 @@
-import { useEffect, useState } from 'react'
-import { useMulta } from '../hooks/useMulta'
-import DataTable from '../components/dashboard/DataTable'
-import MapView from '../components/map/MapView'
-import Alarm from '../assets/audio/beep-warning.mp3'
-import type { Map } from 'leaflet'
+import { useEffect, useState } from "react";
+import { useMulta } from "../hooks/useMulta";
+import DataTable from "../components/dashboard/DataTable";
+import MapView from "../components/map/MapView";
+import Alarm from "../assets/audio/beep-warning.mp3";
+import type { Map } from "leaflet";
+import Header from "../components/ui/Header";
 
 const Dashboard = () => {
-  const [map, setMap] = useState<Map | null>(null)
-  const { multasToday, isLoading, getAllMultas } = useMulta()
+  const [map, setMap] = useState<Map | null>(null);
+  const { multasToday, isLoading, getAllMultas } = useMulta();
   const [previousMultas, setPreviousMultas] = useState<Multa[]>(multasToday);
 
   useEffect(() => {
-    if (!isLoading) getAllMultas()
+    if (!isLoading) getAllMultas();
 
     const reFetchMultas = setInterval(() => {
-      getAllMultas()
-    }, 10000)
+      getAllMultas();
+    }, 10000);
 
-    return () => clearInterval(reFetchMultas)
-  }, [])
+    return () => clearInterval(reFetchMultas);
+  }, []);
 
   useEffect(() => {
     const newMultas = multasToday.filter(
       (newMulta) =>
-        !previousMultas.some((prevMulta) => prevMulta.iCodMulta === newMulta.iCodMulta ||
-        prevMulta.dFechaPago !== newMulta.dFechaPago) 
+        !previousMultas.some(
+          (prevMulta) =>
+            prevMulta.iCodMulta === newMulta.iCodMulta ||
+            prevMulta.dFechaPago !== newMulta.dFechaPago
+        )
     );
 
     if (newMultas.length > 0) {
-      playNotificationSound(); 
+      playNotificationSound();
     }
 
     setPreviousMultas(multasToday);
@@ -40,11 +44,14 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="flex flex-col gap-5">
-      <MapView onMapChange={setMap} multas={multasToday} />
-      <DataTable map={map} multas={multasToday} />
-    </div>
-  )
-}
+    <>
+      <Header title="Georreferencia de cepos" />
+      <div className="flex flex-col gap-5">
+        <MapView onMapChange={setMap} multas={multasToday} />
+        <DataTable map={map} multas={multasToday} />
+      </div>
+    </>
+  );
+};
 
-export default Dashboard
+export default Dashboard;
