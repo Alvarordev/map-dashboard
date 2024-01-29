@@ -29,7 +29,7 @@ const Table = ({ table }: Props) => {
             className={index % 2 === 0 ? "bg-background" : "bg-muted"}
           >
             {row.getVisibleCells().map((cell) => (
-              <td key={cell.id} className="max-w-60">
+              <td key={cell.id} className="max-w-60 px-0.5">
                 {flexRender(cell.column.columnDef.cell, cell.getContext())}
               </td>
             ))}

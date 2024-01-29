@@ -98,8 +98,8 @@ const DataTable = ({ map, multas }: Props) => {
 
         return (
           <div className={`text-center py-2`}>
-            <Badge className={`${estado ? "bg-red-500" : "bg-emerald-500"}`}>
-              {estado ? "bloqueado" : "liberado"}
+            <Badge className={`${estado ? "bg-emerald-500" : "bg-red-500"}`}>
+              {estado ? "liberado" : "bloqueado"}
             </Badge>
           </div>
         );
@@ -144,9 +144,10 @@ const DataTable = ({ map, multas }: Props) => {
       header: "Fecha Liberado",
       accessorKey: "dtFechaDesbloqueo",
       cell: ({ row }) => {
-        const formattedDate = new Date(
-          row.getValue("dtFechaDesbloqueo")
-        ).toLocaleString("es-ES");
+        const rowDate: string = row.getValue("dtFechaDesbloqueo");
+        if (!rowDate) return <div></div>;
+
+        const formattedDate = new Date(rowDate).toLocaleString("es-ES");
 
         return <div className={`text-center`}>{formattedDate}</div>;
       },
