@@ -1,6 +1,5 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import {
-  LayoutDashboard,
   LogOut,
   PanelLeft,
   Building2,
@@ -9,7 +8,6 @@ import {
   Settings2,
   Users,
   ShieldHalf,
-  Map,
   MapPinned,
 } from "lucide-react";
 import { Button } from "../ui/Button";
