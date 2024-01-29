@@ -92,9 +92,9 @@ const DataTable = ({ map, multas }: Props) => {
     },
     {
       header: "Estado",
-      accessorKey: "bEstadoRegistro",
+      accessorKey: "dtFechaDesbloqueo",
       cell: ({ row }) => {
-        const estado = row.getValue("bEstadoRegistro");
+        const estado = row.getValue("dtFechaDesbloqueo");
 
         return (
           <div className={`text-center py-2`}>

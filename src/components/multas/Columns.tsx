@@ -50,14 +50,29 @@ export const columns: ColumnDef<Multa>[] = [
   },
   {
     header: "Estado",
-    accessorKey: "bEstadoRegistro",
+    accessorKey: "dtFechaDesbloqueo",
     cell: ({ row }) => {
-      const estado = row.getValue("bEstadoRegistro");
+      const estado = row.getValue("dtFechaDesbloqueo");
 
       return (
         <div className={`text-center py-2`}>
           <Badge className={`${estado ? "bg-red-500" : "bg-emerald-500"}`}>
             {estado ? "Bloqueado" : "Liberado"}
+          </Badge>
+        </div>
+      );
+    },
+  },
+  {
+    header: "Estado Pago",
+    accessorKey: "dFechaPago",
+    cell: ({ row }) => {
+      const pagado: Date = row.getValue("dFechaPago");
+
+      return (
+        <div className={`text-center py-2`}>
+          <Badge className={`${pagado ? "bg-blue-500" : "bg-orange-500"}`}>
+            {pagado ? "Pagado" : "Pendiente"}
           </Badge>
         </div>
       );
