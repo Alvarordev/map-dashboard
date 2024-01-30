@@ -39,9 +39,9 @@ export const updatePerfil = async (
   perfil: Perfil
 ): Promise<{ data: Perfil | null; error: any }> => {
   try {
-    const { iCodPerfil, ...cepoBody } = perfil;
+    const { iCodEmpresa, ...cepoBody } = perfil;
 
-    const res = await API.patch(`/perfil/${iCodPerfil}`, cepoBody, {
+    const res = await API.patch(`/perfil/${iCodEmpresa}`, cepoBody, {
       headers: {
         "Content-Type": "application/json",
       },
