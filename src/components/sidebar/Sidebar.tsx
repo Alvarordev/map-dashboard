@@ -1,6 +1,5 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import {
-  LogOut,
   PanelLeft,
   Building2,
   Cog,
@@ -11,7 +10,7 @@ import {
   MapPinned,
 } from "lucide-react";
 import { Button } from "../ui/Button";
-import { useAuth } from "../../hooks/useAuth";
+import UserButton from "./UserButton";
 
 interface Props {
   toggleBar: boolean;
@@ -21,8 +20,6 @@ interface Props {
 const Sidebar = ({ toggleBar, setToggleBar }: Props) => {
   const location = useLocation();
   const navigate = useNavigate();
-
-  const { logOut: logOutAction } = useAuth();
 
   const routes = [
     {
@@ -130,20 +127,7 @@ const Sidebar = ({ toggleBar, setToggleBar }: Props) => {
         ))}
       </ul>
 
-      <div className="mt-auto">
-        <Button
-          onClick={() => logOutAction(navigate)}
-          className="flex gap-2"
-          variant="ghost"
-        >
-          <>
-            <LogOut className="h-5"/>
-            <span className={`${toggleBar ? "hidden" : ""} text-sm`}>
-              Cerrar sesión
-            </span>
-          </>
-        </Button>
-      </div>
+      <UserButton navigate={navigate} toggleBar={toggleBar} />
     </aside>
   );
 };
