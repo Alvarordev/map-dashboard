@@ -50,7 +50,7 @@ export const columns: ColumnDef<Multa>[] = [
   },
   {
     header: "Estado",
-    accessorKey: "dtFechaDesbloqueo",
+    accessorKey: "bEstadoRegistro",
     cell: ({ row }) => {
       const estado = row.getValue("dtFechaDesbloqueo");
 
