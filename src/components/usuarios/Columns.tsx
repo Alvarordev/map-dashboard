@@ -1,4 +1,7 @@
 import { ColumnDef } from "@tanstack/react-table";
+import { Button } from "../ui/Button";
+import { useModal } from "../../context/ModalProvider";
+import UpdateUsuarioForm from "./UpdateUsuarioForm";
 
 export const columns: ColumnDef<Usuario>[] = [
   {
@@ -23,24 +26,43 @@ export const columns: ColumnDef<Usuario>[] = [
     header: "Fecha de vencimiento",
     accessorKey: "dtFechaVencimiento",
     cell: ({ row }) => {
-      const formattedDate = new Date(
-        row.getValue("dtFechaVencimiento")
-      ).toLocaleString("es-ES");
-      return <div className="text-center">{formattedDate}</div>;
+      const rowDate: string = row.getValue("dtFechaVencimiento");
+      if (!rowDate) return <div></div>;
+
+      const formattedDate = new Date(rowDate).toLocaleString("es-ES");
+
+      return <div className={`text-center`}>{formattedDate}</div>;
     },
   },
   {
     header: "Estado",
     accessorKey: "bEstadoRegistro",
     cell: ({ row }) => {
-
-        return <div className="text-center">{row.getValue("bEstadoRegistro") ? 'Habilitado' : 'Deshabilitado'}</div>;
-      },
+      return (
+        <div className="text-center">
+          {row.getValue("bEstadoRegistro") ? "Habilitado" : "Deshabilitado"}
+        </div>
+      );
+    },
   },
   {
     header: "Opciones",
-    cell: () => {
-      return <div>editar</div>;
+    cell: ({ row }) => {
+      return <UsuarioOptions usuario={row.original} />;
     },
   },
 ];
+
+const UsuarioOptions = ({ usuario }: { usuario: Usuario }) => {
+  const { openModal } = useModal();
+
+  return (
+    <Button
+      variant="link"
+      className="w-full flex justify-center items-center"
+      onClick={() => openModal(<UpdateUsuarioForm dataUsuario={usuario} />)}
+    >
+      editar
+    </Button>
+  );
+};
