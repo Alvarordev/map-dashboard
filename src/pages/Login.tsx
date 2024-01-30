@@ -13,7 +13,7 @@ const Login = () => {
   const { logIn } = useAuth();
 
   const [formData, setFormData] = useState({
-    vCodigoEmpresa: "",
+    // vCodigoEmpresa: "",
     vAliasUsuario: "",
     vClaveUsuario: "",
   });
@@ -42,7 +42,7 @@ const Login = () => {
           onSubmit={handleLogin}
           className="flex flex-col gap-2 w-full max-w-xs"
         >
-          <div>
+          {/* <div>
             <label className="text-xs text-muted-foreground pb-1">
               Empresa:
             </label>
@@ -53,7 +53,7 @@ const Login = () => {
               onChange={handleInputChange}
               placeholder="Ingresa el código de empresa..."
             />
-          </div>
+          </div> */}
 
           <div>
             <label className="text-xs text-muted-foreground pb-1">
