@@ -5,6 +5,7 @@ import { useAuth } from "../../hooks/useAuth";
 import { useModal } from "../../context/ModalProvider";
 import { toast } from "sonner";
 import { useCepo } from "../../hooks/useCepo";
+import { Label } from "../ui/Label";
 // import * as z from "zod";
 
 // const schema = z.object({
@@ -21,8 +22,6 @@ import { useCepo } from "../../hooks/useCepo";
 //   numeroLlantas: z.string().min(1).max(255),
 //   preliquidacion: z.string().min(1).max(255),
 // });
-
-
 
 const CepoForm = () => {
   const { userData } = useAuth();
@@ -43,7 +42,7 @@ const CepoForm = () => {
       ...data,
       iCodEmpresa: +userData.iCodEmpresa,
       iCodigoUsuarioCreacion: +userData.iCodUsuario,
-      vCostoCepo: +data.vCostoCepo
+      vCostoCepo: +data.vCostoCepo,
     };
 
     const res = await createCepo(cepo);
@@ -67,7 +66,7 @@ const CepoForm = () => {
         className="flex flex-wrap w-[250px] justify-center gap-3"
       >
         <div className="flex flex-col w-full">
-          <label>Descripción</label>
+          <Label>Descripción</Label>
           <Input
             {...register("vDescripcionCepo")}
             type="text"
@@ -75,7 +74,7 @@ const CepoForm = () => {
           />
         </div>
         <div className="flex flex-col w-full">
-          <label>Costo del cepo</label>
+          <Label>Costo del cepo</Label>
           <Input
             {...register("vCostoCepo")}
             type="text"

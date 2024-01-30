@@ -6,6 +6,7 @@ import { Button } from "../components/ui/Button";
 import { useAuth } from "../hooks/useAuth";
 import { Input } from "../components/ui/Input";
 import { Eye, EyeOff } from "lucide-react";
+import { Label } from "../components/ui/Label";
 
 const Login = () => {
   const [togglePass, setTogglePass] = useState(false);
@@ -43,9 +44,9 @@ const Login = () => {
           className="flex flex-col gap-2 w-full max-w-xs"
         >
           {/* <div>
-            <label className="text-xs text-muted-foreground pb-1">
+            <Label>
               Empresa:
-            </label>
+            </Label>
             <Input
               type="text"
               name="vCodigoEmpresa"
@@ -56,9 +57,7 @@ const Login = () => {
           </div> */}
 
           <div>
-            <label className="text-xs text-muted-foreground pb-1">
-              Username:
-            </label>
+            <Label>Username:</Label>
             <Input
               type="text"
               name="vAliasUsuario"
@@ -69,9 +68,7 @@ const Login = () => {
           </div>
 
           <div>
-            <label className="text-xs text-muted-foreground pb-1">
-              Password:
-            </label>
+            <Label>Password:</Label>
             <div className="relative">
               <Input
                 type={togglePass ? "text" : "password"}

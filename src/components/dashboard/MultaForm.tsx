@@ -7,6 +7,7 @@ import { useModal } from "../../context/ModalProvider";
 import { toast } from "sonner";
 import { useCepo } from "../../hooks/useCepo";
 import { useEffect } from "react";
+import { Label } from "../ui/Label";
 
 const MultaForm = () => {
   const { userData } = useAuth();
@@ -37,7 +38,7 @@ const MultaForm = () => {
       gCoordenadasXMulta: -12.09,
       gCoordenadasYMulta: -77.0507,
       iCodTipoCepo: +data.iCodTipoCepo,
-      dpCostoMulta: 99.00,
+      dpCostoMulta: 99.0,
       iNumeroLlantas: +data.iNumeroLlantas,
     };
 
@@ -62,21 +63,23 @@ const MultaForm = () => {
         className="flex flex-wrap w-[650px] justify-center gap-3"
       >
         <div className="flex flex-col">
-          <label>Tipo de cepo</label>
+          <Label>Tipo de cepo</Label>
           <select
             {...register("iCodTipoCepo")}
             className="flex w-[206px] h-9 rounded-sm border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors"
           >
-            <option value="defaultValue" selected disabled >
+            <option value="defaultValue" selected disabled>
               Elige uno
             </option>
             {cepos.map((cepo) => (
-              <option key={cepo.iCodTipoCepo} value={cepo.iCodTipoCepo}>{cepo.vDescripcionCepo}</option>
+              <option key={cepo.iCodTipoCepo} value={cepo.iCodTipoCepo}>
+                {cepo.vDescripcionCepo}
+              </option>
             ))}
           </select>
         </div>
         <div className="flex flex-col">
-          <label>Direccion</label>
+          <Label>Direccion</Label>
           <Input
             {...register("vDireccionMulta")}
             type="text"
@@ -84,7 +87,7 @@ const MultaForm = () => {
           />
         </div>
         <div className="flex flex-col">
-          <label>Concepto multa</label>
+          <Label>Concepto multa</Label>
           <Input
             {...register("vConceptoMulta")}
             type="text"
@@ -92,7 +95,7 @@ const MultaForm = () => {
           />
         </div>
         <div className="flex flex-col">
-          <label>Tarjeta propiedad</label>
+          <Label>Tarjeta propiedad</Label>
           <Input
             {...register("vTarjetaPropiedad")}
             type="text"
@@ -100,7 +103,7 @@ const MultaForm = () => {
           />
         </div>
         <div className="flex flex-col">
-          <label>Licencia conducir</label>
+          <Label>Licencia conducir</Label>
           <Input
             {...register("vLicenciaConducir")}
             type="text"
@@ -108,7 +111,7 @@ const MultaForm = () => {
           />
         </div>
         <div className="flex flex-col">
-          <label>Placa auto</label>
+          <Label>Placa auto</Label>
           <Input
             {...register("vPlacaAuto")}
             type="text"
@@ -116,19 +119,31 @@ const MultaForm = () => {
           />
         </div>
         <div className="flex flex-col">
-          <label>Marca auto</label>
-          <Input {...register("vMarcaAuto")} type="text" placeholder="Ej: Nissan" />
+          <Label>Marca auto</Label>
+          <Input
+            {...register("vMarcaAuto")}
+            type="text"
+            placeholder="Ej: Nissan"
+          />
         </div>
         <div className="flex flex-col">
-          <label>Modelo auto</label>
-          <Input {...register("vModeloAuto")} type="text" placeholder="Ej: Centra" />
+          <Label>Modelo auto</Label>
+          <Input
+            {...register("vModeloAuto")}
+            type="text"
+            placeholder="Ej: Centra"
+          />
         </div>
         <div className="flex flex-col">
-          <label>Color auto</label>
-          <Input {...register("vColorAuto")} type="text" placeholder="Ej: Blanco" />
+          <Label>Color auto</Label>
+          <Input
+            {...register("vColorAuto")}
+            type="text"
+            placeholder="Ej: Blanco"
+          />
         </div>
         <div className="flex flex-col">
-          <label>Numero llantas</label>
+          <Label>Numero llantas</Label>
           <Input
             {...register("iNumeroLlantas")}
             type="number"
@@ -136,7 +151,7 @@ const MultaForm = () => {
           />
         </div>
         <div className="flex flex-col">
-          <label>Preliquidacion</label>
+          <Label>Preliquidacion</Label>
           <Input
             {...register("vCodigoPreliquidacion")}
             type="text"

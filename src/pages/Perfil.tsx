@@ -4,7 +4,7 @@ import Header from "../components/ui/Header"
 const Perfil = () => {
   return (
     <>
-        <Header title="Administarar perfiles" />
+        <Header title="Administrar perfiles" />
 
         <PerfilDataTable/>
     </>

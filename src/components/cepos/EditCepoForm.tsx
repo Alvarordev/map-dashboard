@@ -5,6 +5,7 @@ import { useAuth } from "../../hooks/useAuth";
 import { useModal } from "../../context/ModalProvider";
 import { toast } from "sonner";
 import { useCepo } from "../../hooks/useCepo";
+import { Label } from "../ui/Label";
 
 const EditCepoForm = ({ dataCepo }: { dataCepo: Tipocepo }) => {
   const { userData } = useAuth();
@@ -35,7 +36,7 @@ const EditCepoForm = ({ dataCepo }: { dataCepo: Tipocepo }) => {
     };
 
     const res = await updateCepo(cepo);
-    console.log(res)
+    console.log(res);
 
     if (!error) {
       toast.success("Se guardaron los cambios");
@@ -54,7 +55,7 @@ const EditCepoForm = ({ dataCepo }: { dataCepo: Tipocepo }) => {
         className="flex flex-wrap w-[250px] justify-center gap-3"
       >
         <div className="flex flex-col w-full">
-          <label>Descripción</label>
+          <Label>Descripción</Label>
           <Input
             {...register("vDescripcionCepo")}
             type="text"
@@ -62,7 +63,7 @@ const EditCepoForm = ({ dataCepo }: { dataCepo: Tipocepo }) => {
           />
         </div>
         <div className="flex flex-col w-full">
-          <label>Costo del cepo</label>
+          <Label>Costo del cepo</Label>
           <Input
             {...register("vCostoCepo")}
             type="text"
