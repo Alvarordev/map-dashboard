@@ -11,6 +11,8 @@ import {
 } from "lucide-react";
 import { Button } from "../ui/Button";
 import UserButton from "./UserButton";
+import { useAuth } from "../../hooks/useAuth";
+import Logo from "../../assets/logo-cepos.png";
 
 interface Props {
   toggleBar: boolean;
@@ -20,6 +22,7 @@ interface Props {
 const Sidebar = ({ toggleBar, setToggleBar }: Props) => {
   const location = useLocation();
   const navigate = useNavigate();
+  const { userData } = useAuth();
 
   const routes = [
     {
@@ -81,7 +84,7 @@ const Sidebar = ({ toggleBar, setToggleBar }: Props) => {
     <aside
       className={`${
         toggleBar ? "max-w-24" : "max-w-64"
-      } text-primary-foreground bg-foreground flex flex-col min-h-full w-full py-8 px-6 transition-all fixed`}
+      } text-primary-foreground bg-foreground flex flex-col min-h-full w-full py-8 px-6 transition-all fixed z-50`}
     >
       <header className="flex justify-between items-center pb-10">
         <div
@@ -89,7 +92,11 @@ const Sidebar = ({ toggleBar, setToggleBar }: Props) => {
             toggleBar ? "hidden" : ""
           } text-center text-2xl font-semibold`}
         >
-          Logo prueba
+          <img
+            src={Logo}
+            alt="logo-empresa"
+            className="w-[150px] h-[40px] object-center object-contain mt-2"
+          />
         </div>
 
         <Button
@@ -107,7 +114,7 @@ const Sidebar = ({ toggleBar, setToggleBar }: Props) => {
           toggleBar ? "hidden" : ""
         } text-sm font-semibold text-center border-b pb-3 border-muted-foreground`}
       >
-        Municipalidad de prueba
+        {userData?.vNombreEmpresa}
       </h3>
 
       <ul className="flex flex-col gap-2.5 py-5">

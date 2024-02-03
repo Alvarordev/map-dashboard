@@ -26,8 +26,8 @@ const Dashboard = () => {
       (newMulta) =>
         !previousMultas.some(
           (prevMulta) =>
-            prevMulta.iCodMulta === newMulta.iCodMulta ||
-            prevMulta.dFechaPago !== newMulta.dFechaPago
+            prevMulta.iCodMulta === newMulta.iCodMulta &&
+            prevMulta.dFechaPago === newMulta.dFechaPago
         )
     );
 
